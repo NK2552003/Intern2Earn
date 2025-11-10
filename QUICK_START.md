@@ -9,7 +9,7 @@ git clone <repo-url>
 cd inter2earn
 
 # Install dependencies
-npm install
+npm install. --legacy-peer-deps
 
 # Create .env.local with your keys
 cp .env.example .env.local
