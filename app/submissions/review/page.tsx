@@ -160,6 +160,55 @@ export default function ReviewSubmissionsPage() {
           })
       }
 
+      // If submission is approved, generate certificate automatically
+      if (newStatus === "approved" && selectedSubmission.application?.student_id) {
+        try {
+          console.log("Attempting to generate certificate for:", {
+            applicationId: selectedSubmission.application_id,
+            studentId: selectedSubmission.application.student_id,
+          })
+
+          const response = await fetch("/api/certificates/generate", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              applicationId: selectedSubmission.application_id,
+              studentId: selectedSubmission.application.student_id,
+            }),
+          })
+
+          let result
+          try {
+            result = await response.json()
+          } catch (parseError) {
+            console.error("Failed to parse certificate generation response:", parseError)
+            result = { error: "Invalid response from server" }
+          }
+          
+          if (!response.ok) {
+            const errorMessage = result?.error || result?.message || `Server error (${response.status})`
+            console.error("Failed to generate certificate:", { status: response.status, result })
+            alert(`⚠️ Submission approved but certificate generation failed:\n${errorMessage}`)
+          } else {
+            console.log("Certificate generation result:", result)
+            if (result?.alreadyExists) {
+              alert("✅ Submission approved!\n\nℹ️ Note: A certificate already exists for this student's internship completion.")
+            } else {
+              alert("✅ Submission approved and certificate generated successfully!\n\nThe student can now view and download their certificate from the Certificates page.")
+            }
+          }
+        } catch (certError) {
+          console.error("Error generating certificate:", certError)
+          alert("⚠️ Submission approved but certificate generation encountered an error.\n\nThe student can check their certificates page or contact support.")
+        }
+      } else if (newStatus === "revision_needed") {
+        alert("📝 Revision requested. The student has been notified to make improvements.")
+      } else if (newStatus === "rejected") {
+        alert("❌ Submission rejected. The student has been notified.")
+      }
+
       // Refresh submissions
       const { data: mentorInternships } = await supabase
         .from("internships")
