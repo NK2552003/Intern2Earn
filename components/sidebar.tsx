@@ -98,6 +98,7 @@ export default function Sidebar({ role }: SidebarProps) {
           { href: "/internships/manage", label: "My Internships", icon: <Briefcase size={20} />, category: "manage" },
           { href: "/applicants", label: "Applicants", icon: <Users size={20} />, category: "manage" },
           { href: "/submissions/review", label: "Reviews", icon: <CheckCircle size={20} />, category: "manage" },
+          { href: "/progress", label: "Student Progress", icon: <Clock size={20} />, category: "manage" },
           { href: "/students", label: "My Students", icon: <BookOpen size={20} />, category: "manage" },
           { href: "/profile", label: "Profile", icon: <User size={20} />, category: "account" },
         ]
