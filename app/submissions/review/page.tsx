@@ -17,6 +17,7 @@ interface Submission {
   project_url?: string
   github_url?: string
   application_id: string
+  mentor_feedback?: string
   application?: {
     student_id: string
     student: {
@@ -30,12 +31,26 @@ interface Submission {
   }
 }
 
+interface Review {
+  id: string
+  reviewer_id: string
+  comment: string
+  created_at: string
+  reviewer: {
+    full_name: string
+    role: string
+  }
+}
+
 export default function ReviewSubmissionsPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null)
   const [reviewNote, setReviewNote] = useState("")
   const [isReviewing, setIsReviewing] = useState(false)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [newMessage, setNewMessage] = useState("")
+  const [isSendingMessage, setIsSendingMessage] = useState(false)
   const router = useRouter()
   const { user: clerkUser, isLoaded } = useUser()
 
@@ -93,6 +108,7 @@ export default function ReviewSubmissionsPage() {
               project_url,
               github_url,
               application_id,
+              mentor_feedback,
               application:applications(
                 student_id,
                 student:profiles!applications_student_id_fkey(full_name, email),
@@ -102,7 +118,7 @@ export default function ReviewSubmissionsPage() {
             .in("application_id", applicationIds)
             .order("submission_date", { ascending: false })
 
-          setSubmissions(submissionsData || [])
+          setSubmissions(submissionsData as any || [])
         }
       }
 
@@ -120,14 +136,29 @@ export default function ReviewSubmissionsPage() {
 
     try {
       const supabase = createClient()
+      
+      // Update submission with status and mentor feedback
       const { error } = await supabase
         .from("submissions")
         .update({
           status: newStatus,
+          mentor_feedback: reviewNote,
         })
         .eq("id", selectedSubmission.id)
 
       if (error) throw error
+
+      // If review note is provided, also add it to the reviews table as a message
+      if (reviewNote.trim()) {
+        await supabase
+          .from("reviews")
+          .insert({
+            application_id: selectedSubmission.application_id,
+            reviewer_id: clerkUser!.id,
+            rating: 3, // Default rating for review messages
+            comment: reviewNote,
+          })
+      }
 
       // Refresh submissions
       const { data: mentorInternships } = await supabase
@@ -138,36 +169,101 @@ export default function ReviewSubmissionsPage() {
       const internshipIds = mentorInternships?.map((i) => i.id) || []
 
       if (internshipIds.length > 0) {
-        const { data: submissionsData } = await supabase
-          .from("submissions")
-          .select(`
-            id,
-            title,
-            description,
-            status,
-            submission_date,
-            project_url,
-            github_url,
-            student_id,
-            application: applications(
-              student: profiles(full_name, email),
-              internship: internships(title, company_name)
-            )
-          `)
-          .in("application_id", (await supabase.from("applications").select("id").in("internship_id", internshipIds)).data?.map((a) => a.id) || [])
-          .order("submission_date", { ascending: false })
+        const { data: applications } = await supabase
+          .from("applications")
+          .select("id")
+          .in("internship_id", internshipIds)
 
-        setSubmissions(submissionsData || [])
+        const applicationIds = applications?.map((a) => a.id) || []
+
+        if (applicationIds.length > 0) {
+          const { data: submissionsData } = await supabase
+            .from("submissions")
+            .select(`
+              id,
+              title,
+              description,
+              status,
+              submission_date,
+              project_url,
+              github_url,
+              application_id,
+              mentor_feedback,
+              application:applications(
+                student_id,
+                student:profiles!applications_student_id_fkey(full_name, email),
+                internship:internships(title, company_name)
+              )
+            `)
+            .in("application_id", applicationIds)
+            .order("submission_date", { ascending: false })
+
+          setSubmissions(submissionsData as any || [])
+        }
       }
 
       setSelectedSubmission(null)
       setReviewNote("")
+      setReviews([])
     } catch (error: unknown) {
       console.error("Error reviewing submission:", error)
     } finally {
       setIsReviewing(false)
     }
   }
+
+  const loadReviews = async (applicationId: string) => {
+    try {
+      const supabase = createClient()
+      const { data: reviewsData } = await supabase
+        .from("reviews")
+        .select(`
+          id,
+          reviewer_id,
+          comment,
+          created_at,
+          reviewer:profiles!reviews_reviewer_id_fkey(full_name, role)
+        `)
+        .eq("application_id", applicationId)
+        .order("created_at", { ascending: true })
+
+      setReviews(reviewsData as any || [])
+    } catch (error) {
+      console.error("Error loading reviews:", error)
+    }
+  }
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !selectedSubmission) return
+
+    setIsSendingMessage(true)
+
+    try {
+      const supabase = createClient()
+      await supabase
+        .from("reviews")
+        .insert({
+          application_id: selectedSubmission.application_id,
+          reviewer_id: clerkUser!.id,
+          rating: 3, // Default rating for chat messages
+          comment: newMessage,
+        })
+
+      setNewMessage("")
+      await loadReviews(selectedSubmission.application_id)
+    } catch (error) {
+      console.error("Error sending message:", error)
+    } finally {
+      setIsSendingMessage(false)
+    }
+  }
+
+  useEffect(() => {
+    if (selectedSubmission) {
+      loadReviews(selectedSubmission.application_id)
+      setReviewNote(selectedSubmission.mentor_feedback || "")
+    }
+  }, [selectedSubmission])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -321,44 +417,102 @@ export default function ReviewSubmissionsPage() {
                     </div>
                   </div>
 
+                  {/* Chat/Review Thread */}
+                  <div className="mb-6 border border-border rounded-lg bg-secondary/30">
+                    <div className="p-4 border-b border-border">
+                      <h3 className="font-medium text-foreground">Discussion</h3>
+                    </div>
+                    <div className="p-4 max-h-64 overflow-y-auto space-y-3">
+                      {reviews.length > 0 ? (
+                        reviews.map((review) => (
+                          <div
+                            key={review.id}
+                            className={`p-3 rounded-lg ${
+                              review.reviewer_id === clerkUser?.id
+                                ? "bg-primary/10 ml-8"
+                                : "bg-secondary mr-8"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-sm font-medium text-foreground">
+                                {review.reviewer?.full_name} ({review.reviewer?.role})
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {new Date(review.created_at).toLocaleString()}
+                              </span>
+                            </div>
+                            <p className="text-sm text-foreground">{review.comment}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-sm text-muted-foreground text-center py-4">No messages yet</p>
+                      )}
+                    </div>
+                    <div className="p-4 border-t border-border">
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                          placeholder="Type a message..."
+                          className="flex-1 px-3 py-2 bg-input border border-border rounded-lg text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                        />
+                        <button
+                          onClick={handleSendMessage}
+                          disabled={isSendingMessage || !newMessage.trim()}
+                          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        >
+                          Send
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Review Notes (optional)</label>
+                      <label className="block text-sm font-medium text-foreground mb-2">
+                        Review Notes & Status Update
+                      </label>
                       <textarea
                         rows={4}
                         value={reviewNote}
                         onChange={(e) => setReviewNote(e.target.value)}
                         className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
-                        placeholder="Add feedback for the student..."
+                        placeholder="Add feedback and update status..."
                       />
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="grid grid-cols-2 gap-3">
                       <button
                         onClick={(e) => handleReviewSubmit(e, "approved")}
                         disabled={isReviewing}
-                        className="flex-1 py-2 px-4 bg-green-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="py-2 px-4 bg-green-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         {isReviewing ? "Updating..." : "Approve"}
                       </button>
                       <button
                         onClick={(e) => handleReviewSubmit(e, "revision_needed")}
                         disabled={isReviewing}
-                        className="flex-1 py-2 px-4 bg-yellow-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="py-2 px-4 bg-yellow-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         {isReviewing ? "Updating..." : "Request Revision"}
                       </button>
                       <button
                         onClick={(e) => handleReviewSubmit(e, "rejected")}
                         disabled={isReviewing}
-                        className="flex-1 py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         {isReviewing ? "Updating..." : "Reject"}
                       </button>
                       <button
-                        onClick={() => setSelectedSubmission(null)}
+                        onClick={() => {
+                          setSelectedSubmission(null)
+                          setReviews([])
+                          setNewMessage("")
+                        }}
                         disabled={isReviewing}
-                        className="flex-1 py-2 px-4 bg-secondary text-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="py-2 px-4 bg-secondary text-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         Close
                       </button>

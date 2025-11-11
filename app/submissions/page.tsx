@@ -14,11 +14,26 @@ interface Submission {
   description: string
   status: string
   submission_date: string
+  project_url?: string
+  github_url?: string
+  mentor_feedback?: string
+  application_id: string
   application?: {
     internship: {
       title: string
       company_name: string
     }
+  }
+}
+
+interface Review {
+  id: string
+  reviewer_id: string
+  comment: string
+  created_at: string
+  reviewer: {
+    full_name: string
+    role: string
   }
 }
 
@@ -28,6 +43,10 @@ export default function SubmissionsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [acceptedApps, setAcceptedApps] = useState<any[]>([])
+  const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [newMessage, setNewMessage] = useState("")
+  const [isSendingMessage, setIsSendingMessage] = useState(false)
   const [formData, setFormData] = useState({
     application_id: "",
     title: "",
@@ -73,6 +92,10 @@ export default function SubmissionsPage() {
           description,
           status,
           submission_date,
+          project_url,
+          github_url,
+          mentor_feedback,
+          application_id,
           application: applications(
             internship: internships(title, company_name)
           )
@@ -83,7 +106,7 @@ export default function SubmissionsPage() {
         )
         .order("submission_date", { ascending: false })
 
-      setSubmissions(submissionsData || [])
+      setSubmissions(submissionsData as any || [])
 
       // Get accepted applications for submission form
       const { data: apps } = await supabase
@@ -120,6 +143,13 @@ export default function SubmissionsPage() {
       if (error) throw error
 
       // Refresh submissions
+      const { data: studentApps } = await supabase
+        .from("applications")
+        .select("id")
+        .eq("student_id", clerkUser!.id)
+      
+      const appIds = studentApps?.map((a) => a.id) || []
+      
       const { data: submissionsData } = await supabase
         .from("submissions")
         .select(`
@@ -128,13 +158,18 @@ export default function SubmissionsPage() {
           description,
           status,
           submission_date,
+          project_url,
+          github_url,
+          mentor_feedback,
+          application_id,
           application: applications(
             internship: internships(title, company_name)
           )
         `)
+        .in("application_id", appIds)
         .order("submission_date", { ascending: false })
 
-      setSubmissions(submissionsData || [])
+      setSubmissions(submissionsData as any || [])
       setShowForm(false)
       setFormData({
         application_id: "",
@@ -149,6 +184,58 @@ export default function SubmissionsPage() {
       setIsSubmitting(false)
     }
   }
+
+  const loadReviews = async (applicationId: string) => {
+    try {
+      const supabase = createClient()
+      const { data: reviewsData } = await supabase
+        .from("reviews")
+        .select(`
+          id,
+          reviewer_id,
+          comment,
+          created_at,
+          reviewer:profiles!reviews_reviewer_id_fkey(full_name, role)
+        `)
+        .eq("application_id", applicationId)
+        .order("created_at", { ascending: true })
+
+      setReviews(reviewsData as any || [])
+    } catch (error) {
+      console.error("Error loading reviews:", error)
+    }
+  }
+
+  const handleSendMessage = async () => {
+    if (!newMessage.trim() || !selectedSubmission) return
+
+    setIsSendingMessage(true)
+
+    try {
+      const supabase = createClient()
+      await supabase
+        .from("reviews")
+        .insert({
+          application_id: selectedSubmission.application_id,
+          reviewer_id: clerkUser!.id,
+          rating: 3, // Default rating for chat messages
+          comment: newMessage,
+        })
+
+      setNewMessage("")
+      await loadReviews(selectedSubmission.application_id)
+    } catch (error) {
+      console.error("Error sending message:", error)
+    } finally {
+      setIsSendingMessage(false)
+    }
+  }
+
+  useEffect(() => {
+    if (selectedSubmission) {
+      loadReviews(selectedSubmission.application_id)
+    }
+  }, [selectedSubmission])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -288,21 +375,167 @@ export default function SubmissionsPage() {
                     {submission.application?.internship?.title} • {submission.application?.internship?.company_name}
                   </p>
                 </div>
-                <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(
-                    submission.status,
-                  )}`}
-                >
-                  {submission.status}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(
+                      submission.status,
+                    )}`}
+                  >
+                    {submission.status}
+                  </span>
+                  <button
+                    onClick={() => setSelectedSubmission(submission)}
+                    className="px-3 py-1 bg-primary text-primary-foreground rounded text-xs font-medium hover:opacity-90"
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
               <p className="text-foreground mb-4">{submission.description}</p>
-              <p className="text-sm text-muted-foreground">
-                Submitted: {new Date(submission.submission_date).toLocaleDateString()}
-              </p>
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Submitted: {new Date(submission.submission_date).toLocaleDateString()}
+                </p>
+                {submission.mentor_feedback && (
+                  <span className="text-xs text-primary font-medium">Has Feedback</span>
+                )}
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Submission Detail Modal */}
+        {selectedSubmission && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-card border border-border rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex items-start justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground">{selectedSubmission.title}</h2>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {selectedSubmission.application?.internship?.title}
+                  </p>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedSubmission(null)
+                    setReviews([])
+                    setNewMessage("")
+                  }}
+                  className="text-muted-foreground hover:text-foreground text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="space-y-6 mb-6">
+                <div>
+                  <h3 className="font-medium text-foreground mb-2">Description</h3>
+                  <p className="text-foreground whitespace-pre-wrap">{selectedSubmission.description}</p>
+                </div>
+
+                {selectedSubmission.project_url && (
+                  <div>
+                    <h3 className="font-medium text-foreground mb-2">Project URL</h3>
+                    <a
+                      href={selectedSubmission.project_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline break-all"
+                    >
+                      {selectedSubmission.project_url}
+                    </a>
+                  </div>
+                )}
+
+                {selectedSubmission.github_url && (
+                  <div>
+                    <h3 className="font-medium text-foreground mb-2">GitHub URL</h3>
+                    <a
+                      href={selectedSubmission.github_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline break-all"
+                    >
+                      {selectedSubmission.github_url}
+                    </a>
+                  </div>
+                )}
+
+                <div>
+                  <h3 className="font-medium text-foreground mb-2">Status</h3>
+                  <span
+                    className={`inline-block px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(
+                      selectedSubmission.status,
+                    )}`}
+                  >
+                    {selectedSubmission.status}
+                  </span>
+                </div>
+
+                {selectedSubmission.mentor_feedback && (
+                  <div>
+                    <h3 className="font-medium text-foreground mb-2">Mentor Feedback</h3>
+                    <div className="bg-secondary/30 border border-border rounded-lg p-4">
+                      <p className="text-foreground whitespace-pre-wrap">{selectedSubmission.mentor_feedback}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Chat/Discussion Section */}
+              <div className="border border-border rounded-lg bg-secondary/30">
+                <div className="p-4 border-b border-border">
+                  <h3 className="font-medium text-foreground">Discussion with Mentor</h3>
+                </div>
+                <div className="p-4 max-h-64 overflow-y-auto space-y-3">
+                  {reviews.length > 0 ? (
+                    reviews.map((review) => (
+                      <div
+                        key={review.id}
+                        className={`p-3 rounded-lg ${
+                          review.reviewer_id === clerkUser?.id
+                            ? "bg-primary/10 ml-8"
+                            : "bg-secondary mr-8"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-medium text-foreground">
+                            {review.reviewer?.full_name} ({review.reviewer?.role})
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(review.created_at).toLocaleString()}
+                          </span>
+                        </div>
+                        <p className="text-sm text-foreground">{review.comment}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-muted-foreground text-center py-4">No messages yet</p>
+                  )}
+                </div>
+                <div className="p-4 border-t border-border">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+                      placeholder="Type a message to your mentor..."
+                      className="flex-1 px-3 py-2 bg-input border border-border rounded-lg text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    <button
+                      onClick={handleSendMessage}
+                      disabled={isSendingMessage || !newMessage.trim()}
+                      className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {submissions.length === 0 && !showForm && (
           <div className="text-center py-12 bg-card border border-border rounded-lg">
