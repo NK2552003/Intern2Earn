@@ -16,8 +16,18 @@ interface Submission {
   submission_date: string
   project_url?: string
   github_url?: string
-  student_id: string
-  application?: any
+  application_id: string
+  application?: {
+    student_id: string
+    student: {
+      full_name: string
+      email: string
+    }
+    internship: {
+      title: string
+      company_name: string
+    }
+  }
 }
 
 export default function ReviewSubmissionsPage() {
@@ -62,26 +72,38 @@ export default function ReviewSubmissionsPage() {
 
       // Get all submissions for these internships
       if (internshipIds.length > 0) {
-        const { data: submissionsData } = await supabase
-          .from("submissions")
-          .select(`
-            id,
-            title,
-            description,
-            status,
-            submission_date,
-            project_url,
-            github_url,
-            student_id,
-            application: applications(
-              student: profiles(full_name, email),
-              internship: internships(title, company_name)
-            )
-          `)
-          .in("application_id", (await supabase.from("applications").select("id").in("internship_id", internshipIds)).data?.map((a) => a.id) || [])
-          .order("submission_date", { ascending: false })
+        // First get all application IDs for these internships
+        const { data: applications } = await supabase
+          .from("applications")
+          .select("id")
+          .in("internship_id", internshipIds)
 
-        setSubmissions(submissionsData || [])
+        const applicationIds = applications?.map((a) => a.id) || []
+
+        if (applicationIds.length > 0) {
+          // Now get submissions for these applications with proper joins
+          const { data: submissionsData } = await supabase
+            .from("submissions")
+            .select(`
+              id,
+              title,
+              description,
+              status,
+              submission_date,
+              project_url,
+              github_url,
+              application_id,
+              application:applications(
+                student_id,
+                student:profiles!applications_student_id_fkey(full_name, email),
+                internship:internships(title, company_name)
+              )
+            `)
+            .in("application_id", applicationIds)
+            .order("submission_date", { ascending: false })
+
+          setSubmissions(submissionsData || [])
+        }
       }
 
       setIsLoading(false)
