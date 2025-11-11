@@ -120,6 +120,15 @@ export default function CertificatesPage() {
         const canvas = await html2canvas(certificateRef.current, {
           scale: 2,
           backgroundColor: "#ffffff",
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          removeContainer: true,
+          imageTimeout: 0,
+          ignoreElements: (element) => {
+            // Ignore elements that might cause issues
+            return false
+          }
         })
 
         const imgData = canvas.toDataURL("image/png")
@@ -134,6 +143,7 @@ export default function CertificatesPage() {
       }
     } catch (error) {
       console.error("Error downloading certificate:", error)
+      alert("Error downloading certificate. Please try again.")
     } finally {
       setIsDownloading(false)
     }
@@ -146,6 +156,15 @@ export default function CertificatesPage() {
         const canvas = await html2canvas(certificateRef.current, {
           scale: 2,
           backgroundColor: "#ffffff",
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          removeContainer: true,
+          imageTimeout: 0,
+          ignoreElements: (element) => {
+            // Ignore elements that might cause issues
+            return false
+          }
         })
 
         canvas.toBlob((blob) => {
@@ -161,6 +180,7 @@ export default function CertificatesPage() {
       }
     } catch (error) {
       console.error("Error downloading certificate:", error)
+      alert("Error downloading certificate. Please try again.")
     } finally {
       setIsDownloading(false)
     }
