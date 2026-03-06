@@ -94,7 +94,7 @@ export const CertificateTemplate = React.forwardRef<HTMLDivElement, CertificateT
 
             {/* Platform Name */}
             <div className="mb-2 text-center">
-              <p className="text-sm tracking-[0.15em] font-bold uppercase" style={{ color: '#fcd34d' }}>Intern2Earn Platform</p>
+              <p className="text-sm tracking-[0.15em] font-bold uppercase" style={{ color: '#fcd34d' }}>Upskillify Platform</p>
             </div>
 
             {/* Header */}

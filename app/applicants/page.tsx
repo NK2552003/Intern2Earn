@@ -107,23 +107,23 @@ export default function ApplicantsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="mentor" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="mentor" />
       <main className="flex-1 overflow-auto">
       <div className="max-w-7xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Review Applicants</h1>
-              <p className="text-muted-foreground mt-2">Manage applications to your internships</p>
+              <h1 className="text-3xl font-bold text-white">Review Applicants</h1>
+              <p className="text-white/60 mt-2">Manage applications to your internships</p>
             </div>
 
             {/* Status Filter */}
@@ -134,8 +134,8 @@ export default function ApplicantsPage() {
                   onClick={() => setSelectedStatus(status)}
                   className={`px-4 py-2 rounded-lg transition-colors capitalize ${
                     selectedStatus === status
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-card border border-border text-foreground hover:bg-secondary"
+                      ? "bg-linear-to-r from-violet-500 to-fuchsia-500 text-white"
+                      : "bg-white/5 border border-white/8 text-white hover:bg-white/5"
                   }`}
                 >
                   {status}
@@ -148,53 +148,53 @@ export default function ApplicantsPage() {
               {applicants.map((applicant) => (
                 <div
                   key={applicant.id}
-                  className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+                  className="bg-white/5 border border-white/8 rounded-lg p-6 hover:shadow-lg transition-shadow"
                 >
                   <div className="grid md:grid-cols-4 gap-4 mb-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Student</p>
-                      <p className="font-bold text-foreground">{applicant.profile?.full_name || "Unknown"}</p>
-                      <p className="text-sm text-muted-foreground">{applicant.profile?.email || "N/A"}</p>
+                      <p className="text-sm text-white/60">Student</p>
+                      <p className="font-bold text-white">{applicant.profile?.full_name || "Unknown"}</p>
+                      <p className="text-sm text-white/60">{applicant.profile?.email || "N/A"}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Internship</p>
-                      <p className="font-bold text-foreground">{applicant.internship?.title}</p>
+                      <p className="text-sm text-white/60">Internship</p>
+                      <p className="font-bold text-white">{applicant.internship?.title}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Skills</p>
+                      <p className="text-sm text-white/60">Skills</p>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {applicant.profile?.skills?.slice(0, 2).map((skill, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-accent/10 text-accent text-xs rounded">
+                          <span key={idx} className="px-2 py-1 bg-violet-500/15/10 text-violet-400 text-xs rounded">
                             {skill}
                           </span>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Applied</p>
-                      <p className="font-bold text-foreground">
+                      <p className="text-sm text-white/60">Applied</p>
+                      <p className="font-bold text-white">
                         {new Date(applicant.submitted_at).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
 
                   {applicant.cover_letter && (
-                    <div className="mb-4 p-4 bg-secondary rounded-lg">
-                      <p className="text-sm text-muted-foreground mb-2">Cover Letter</p>
-                      <p className="text-foreground text-sm">{applicant.cover_letter}</p>
+                    <div className="mb-4 p-4 bg-white/5 rounded-lg">
+                      <p className="text-sm text-white/60 mb-2">Cover Letter</p>
+                      <p className="text-white text-sm">{applicant.cover_letter}</p>
                     </div>
                   )}
 
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleStatusChange(applicant.id, "accepted")}
-                      className="px-4 py-2 bg-green-100 text-green-800 rounded-lg hover:opacity-90 transition-colors font-medium text-sm"
+                      className="px-4 py-2 bg-emerald-500/15 text-emerald-300 rounded-lg hover:opacity-90 transition-colors font-medium text-sm"
                     >
                       Accept
                     </button>
                     <button
                       onClick={() => handleStatusChange(applicant.id, "rejected")}
-                      className="px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:opacity-90 transition-colors font-medium text-sm"
+                      className="px-4 py-2 bg-red-500/15 text-red-300 rounded-lg hover:opacity-90 transition-colors font-medium text-sm"
                     >
                       Reject
                     </button>
@@ -204,8 +204,8 @@ export default function ApplicantsPage() {
             </div>
 
             {applicants.length === 0 && (
-              <div className="text-center py-12 bg-card border border-border rounded-lg">
-                <p className="text-muted-foreground">No {selectedStatus} applications</p>
+              <div className="text-center py-12 bg-white/5 border border-white/8 rounded-lg">
+                <p className="text-white/60">No {selectedStatus} applications</p>
               </div>
             )}
           </div>

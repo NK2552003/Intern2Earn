@@ -317,62 +317,62 @@ export default function ReviewSubmissionsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "approved":
-        return "bg-green-100 text-green-800"
+        return "bg-emerald-500/15 text-emerald-300"
       case "revision_needed":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-amber-500/15 text-amber-300"
       case "rejected":
-        return "bg-red-100 text-red-800"
+        return "bg-red-500/15 text-red-300"
       case "pending":
-        return "bg-blue-100 text-blue-800"
+        return "bg-violet-500/15 text-violet-300"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-white/8 text-white/60"
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="mentor" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="mentor" />
       <main className="flex-1 overflow-auto">
       <div className="max-w-7xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Review Submissions</h1>
-              <p className="text-muted-foreground mt-2">Review and evaluate student project submissions</p>
+              <h1 className="text-3xl font-bold text-white">Review Submissions</h1>
+              <p className="text-white/60 mt-2">Review and evaluate student project submissions</p>
             </div>
 
             {/* Submissions List */}
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
+            <div className="bg-white/5 border border-white/8 rounded-lg overflow-hidden">
               {submissions.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="border-b border-border bg-secondary">
+                    <thead className="border-b border-white/8 bg-white/5">
                       <tr>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Student</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Submission</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Internship</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Status</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Date</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Action</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Student</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Submission</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Internship</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Status</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Date</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {submissions.map((submission) => (
-                        <tr key={submission.id} className="border-b border-border hover:bg-secondary transition-colors">
-                          <td className="px-6 py-4 text-sm text-foreground">
+                        <tr key={submission.id} className="border-b border-white/8 hover:bg-white/5 transition-colors">
+                          <td className="px-6 py-4 text-sm text-white">
                             {submission.application?.student?.full_name}
                           </td>
-                          <td className="px-6 py-4 text-sm text-foreground">{submission.title}</td>
-                          <td className="px-6 py-4 text-sm text-foreground">
+                          <td className="px-6 py-4 text-sm text-white">{submission.title}</td>
+                          <td className="px-6 py-4 text-sm text-white">
                             {submission.application?.internship?.title}
                           </td>
                           <td className="px-6 py-4 text-sm">
@@ -384,13 +384,13 @@ export default function ReviewSubmissionsPage() {
                               {submission.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                          <td className="px-6 py-4 text-sm text-white/60">
                             {new Date(submission.submission_date).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 text-sm">
                             <button
                               onClick={() => setSelectedSubmission(submission)}
-                              className="text-primary hover:underline"
+                              className="text-violet-400 hover:underline"
                             >
                               Review
                             </button>
@@ -402,7 +402,7 @@ export default function ReviewSubmissionsPage() {
                 </div>
               ) : (
                 <div className="p-12 text-center">
-                  <p className="text-muted-foreground">No submissions to review yet</p>
+                  <p className="text-white/60">No submissions to review yet</p>
                 </div>
               )}
             </div>
@@ -410,17 +410,17 @@ export default function ReviewSubmissionsPage() {
             {/* Review Modal */}
             {selectedSubmission && (
               <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                <div className="bg-card border border-border rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="bg-white/5 border border-white/8 rounded-lg p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                   <div className="flex items-start justify-between mb-6">
                     <div>
-                      <h2 className="text-2xl font-bold text-foreground">{selectedSubmission.title}</h2>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <h2 className="text-2xl font-bold text-white">{selectedSubmission.title}</h2>
+                      <p className="text-sm text-white/60 mt-1">
                         By {selectedSubmission.application?.student?.full_name}
                       </p>
                     </div>
                     <button
                       onClick={() => setSelectedSubmission(null)}
-                      className="text-muted-foreground hover:text-foreground text-2xl"
+                      className="text-white/60 hover:text-white text-2xl"
                     >
                       ×
                     </button>
@@ -428,18 +428,18 @@ export default function ReviewSubmissionsPage() {
 
                   <div className="space-y-6 mb-6">
                     <div>
-                      <h3 className="font-medium text-foreground mb-2">Description</h3>
-                      <p className="text-foreground whitespace-pre-wrap">{selectedSubmission.description}</p>
+                      <h3 className="font-medium text-white mb-2">Description</h3>
+                      <p className="text-white whitespace-pre-wrap">{selectedSubmission.description}</p>
                     </div>
 
                     {selectedSubmission.project_url && (
                       <div>
-                        <h3 className="font-medium text-foreground mb-2">Project URL</h3>
+                        <h3 className="font-medium text-white mb-2">Project URL</h3>
                         <a
                           href={selectedSubmission.project_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:underline break-all"
+                          className="text-violet-400 hover:underline break-all"
                         >
                           {selectedSubmission.project_url}
                         </a>
@@ -448,12 +448,12 @@ export default function ReviewSubmissionsPage() {
 
                     {selectedSubmission.github_url && (
                       <div>
-                        <h3 className="font-medium text-foreground mb-2">GitHub URL</h3>
+                        <h3 className="font-medium text-white mb-2">GitHub URL</h3>
                         <a
                           href={selectedSubmission.github_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:underline break-all"
+                          className="text-violet-400 hover:underline break-all"
                         >
                           {selectedSubmission.github_url}
                         </a>
@@ -461,15 +461,15 @@ export default function ReviewSubmissionsPage() {
                     )}
 
                     <div>
-                      <h3 className="font-medium text-foreground mb-2">Current Status</h3>
-                      <p className="text-foreground capitalize">{selectedSubmission.status}</p>
+                      <h3 className="font-medium text-white mb-2">Current Status</h3>
+                      <p className="text-white capitalize">{selectedSubmission.status}</p>
                     </div>
                   </div>
 
                   {/* Chat/Review Thread */}
-                  <div className="mb-6 border border-border rounded-lg bg-secondary/30">
-                    <div className="p-4 border-b border-border">
-                      <h3 className="font-medium text-foreground">Discussion</h3>
+                  <div className="mb-6 border border-white/8 rounded-lg bg-white/3">
+                    <div className="p-4 border-b border-white/8">
+                      <h3 className="font-medium text-white">Discussion</h3>
                     </div>
                     <div className="p-4 max-h-64 overflow-y-auto space-y-3">
                       {reviews.length > 0 ? (
@@ -478,26 +478,26 @@ export default function ReviewSubmissionsPage() {
                             key={review.id}
                             className={`p-3 rounded-lg ${
                               review.reviewer_id === clerkUser?.id
-                                ? "bg-primary/10 ml-8"
-                                : "bg-secondary mr-8"
+                                ? "bg-violet-500/10 ml-8"
+                                : "bg-white/5 mr-8"
                             }`}
                           >
                             <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm font-medium text-foreground">
+                              <span className="text-sm font-medium text-white">
                                 {review.reviewer?.full_name} ({review.reviewer?.role})
                               </span>
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-white/60">
                                 {new Date(review.created_at).toLocaleString()}
                               </span>
                             </div>
-                            <p className="text-sm text-foreground">{review.comment}</p>
+                            <p className="text-sm text-white">{review.comment}</p>
                           </div>
                         ))
                       ) : (
-                        <p className="text-sm text-muted-foreground text-center py-4">No messages yet</p>
+                        <p className="text-sm text-white/60 text-center py-4">No messages yet</p>
                       )}
                     </div>
-                    <div className="p-4 border-t border-border">
+                    <div className="p-4 border-t border-white/8">
                       <div className="flex gap-2">
                         <input
                           type="text"
@@ -505,12 +505,12 @@ export default function ReviewSubmissionsPage() {
                           onChange={(e) => setNewMessage(e.target.value)}
                           onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                           placeholder="Type a message..."
-                          className="flex-1 px-3 py-2 bg-input border border-border rounded-lg text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="flex-1 px-3 py-2 bg-white/6 border border-white/8 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         />
                         <button
                           onClick={handleSendMessage}
                           disabled={isSendingMessage || !newMessage.trim()}
-                          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                          className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                         >
                           Send
                         </button>
@@ -520,14 +520,14 @@ export default function ReviewSubmissionsPage() {
 
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">
+                      <label className="block text-sm font-medium text-white mb-2">
                         Review Notes & Status Update
                       </label>
                       <textarea
                         rows={4}
                         value={reviewNote}
                         onChange={(e) => setReviewNote(e.target.value)}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                         placeholder="Add feedback and update status..."
                       />
                     </div>
@@ -561,7 +561,7 @@ export default function ReviewSubmissionsPage() {
                           setNewMessage("")
                         }}
                         disabled={isReviewing}
-                        className="py-2 px-4 bg-secondary text-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="py-2 px-4 bg-white/5 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         Close
                       </button>

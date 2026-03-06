@@ -1,4 +1,4 @@
-# Inter2Earn - Quick Start Guide
+# Upskillify - Quick Start Guide
 
 ## Setup (5 minutes)
 
@@ -6,7 +6,7 @@
 \`\`\`bash
 # Clone the repository
 git clone <repo-url>
-cd inter2earn
+cd upskillify
 
 # Install dependencies
 npm install. --legacy-peer-deps

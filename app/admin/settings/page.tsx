@@ -84,7 +84,7 @@ export default function SettingsPage() {
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
       </div>
     )
   }
@@ -100,15 +100,15 @@ export default function SettingsPage() {
     enabled: boolean
     onChange: () => void
   }) => (
-    <div className="flex items-center justify-between py-4 border-b border-border last:border-b-0">
+    <div className="flex items-center justify-between py-4 border-b border-white/8 last:border-b-0">
       <div className="flex-1">
-        <h3 className="font-medium text-foreground">{title}</h3>
-        <p className="text-sm text-muted-foreground mt-1">{description}</p>
+        <h3 className="font-medium text-white">{title}</h3>
+        <p className="text-sm text-white/60 mt-1">{description}</p>
       </div>
       <button
         onClick={onChange}
         className={`ml-4 relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-          enabled ? "bg-primary" : "bg-input"
+          enabled ? "bg-violet-500" : "bg-white/6"
         }`}
       >
         <span
@@ -121,7 +121,7 @@ export default function SettingsPage() {
   )
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#05040f]">
       <div className="hidden md:block">
         <Sidebar role="admin" />
       </div>
@@ -131,15 +131,15 @@ export default function SettingsPage() {
       <main className="flex-1 overflow-auto">
       <div className="max-w-4xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-              <p className="text-muted-foreground mt-2">Manage platform configuration and preferences</p>
+              <h1 className="text-3xl font-bold text-white">Settings</h1>
+              <p className="text-white/60 mt-2">Manage platform configuration and preferences</p>
             </div>
 
             {/* Platform Settings */}
-            <div className="bg-card border border-border rounded-lg mb-8">
-              <div className="p-6 border-b border-border">
-                <h2 className="text-xl font-semibold text-foreground">Platform Settings</h2>
-                <p className="text-sm text-muted-foreground mt-1">Control how the platform operates</p>
+            <div className="bg-white/5 border border-white/8 rounded-lg mb-8">
+              <div className="p-6 border-b border-white/8">
+                <h2 className="text-xl font-semibold text-white">Platform Settings</h2>
+                <p className="text-sm text-white/60 mt-1">Control how the platform operates</p>
               </div>
               <div className="p-6">
                 <SettingItem
@@ -158,10 +158,10 @@ export default function SettingsPage() {
             </div>
 
             {/* Application Settings */}
-            <div className="bg-card border border-border rounded-lg mb-8">
-              <div className="p-6 border-b border-border">
-                <h2 className="text-xl font-semibold text-foreground">Application Settings</h2>
-                <p className="text-sm text-muted-foreground mt-1">Configure application processing</p>
+            <div className="bg-white/5 border border-white/8 rounded-lg mb-8">
+              <div className="p-6 border-b border-white/8">
+                <h2 className="text-xl font-semibold text-white">Application Settings</h2>
+                <p className="text-sm text-white/60 mt-1">Configure application processing</p>
               </div>
               <div className="p-6">
                 <SettingItem
@@ -184,7 +184,7 @@ export default function SettingsPage() {
               <button
                 onClick={handleSaveSettings}
                 disabled={isSaving}
-                className="px-6 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
+                className="px-6 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
               >
                 {isSaving ? "Saving..." : "Save Settings"}
               </button>
@@ -198,16 +198,16 @@ export default function SettingsPage() {
                     maintenanceMode: false,
                   })
                 }}
-                className="px-6 py-2 bg-secondary text-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+                className="px-6 py-2 bg-white/5 text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
               >
                 Reset to Defaults
               </button>
             </div>
 
             {/* Information Section */}
-            <div className="mt-8 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-              <h3 className="font-semibold text-blue-900 dark:text-blue-100">ℹ️ Platform Information</h3>
-              <ul className="mt-3 text-sm text-blue-800 dark:text-blue-200 space-y-2">
+            <div className="mt-8 bg-violet-500/10 dark:bg-blue-950 border border-violet-500/30 rounded-lg p-6">
+              <h3 className="font-semibold text-violet-200 dark:text-blue-100">ℹ️ Platform Information</h3>
+              <ul className="mt-3 text-sm text-violet-300 space-y-2">
                 <li>• Current API Version: v1.0</li>
                 <li>• Database Status: Connected</li>
                 <li>• Last Backup: Today at 12:00 AM</li>

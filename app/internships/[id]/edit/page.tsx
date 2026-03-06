@@ -148,10 +148,10 @@ export default function EditInternshipPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-[#05040f] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Loading internship...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-500 mx-auto"></div>
+          <p className="mt-4 text-white/60">Loading internship...</p>
         </div>
       </div>
     )
@@ -159,10 +159,10 @@ export default function EditInternshipPage() {
 
   if (!internship) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-[#05040f] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-muted-foreground">Internship not found</p>
-          <Link href="/internships/manage" className="text-primary hover:underline mt-4 inline-block">
+          <p className="text-white/60">Internship not found</p>
+          <Link href="/internships/manage" className="text-violet-400 hover:underline mt-4 inline-block">
             Back to Manage Internships
           </Link>
         </div>
@@ -171,19 +171,19 @@ export default function EditInternshipPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#05040f]">
       <div className="max-w-4xl mx-auto p-6">
         <div className="mb-6">
           <Link
             href="/internships/manage"
-            className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center text-white/60 hover:text-white transition-colors"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Manage Internships
           </Link>
         </div>
 
-        <div className="bg-card rounded-lg border p-6">
+        <div className="bg-white/5 rounded-lg border p-6">
           <h1 className="text-2xl font-bold mb-6">Edit Internship</h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -198,7 +198,7 @@ export default function EditInternshipPage() {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="e.g. Frontend Developer Intern"
               />
             </div>
@@ -214,7 +214,7 @@ export default function EditInternshipPage() {
                 value={formData.company_name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="e.g. Tech Corp"
               />
             </div>
@@ -230,7 +230,7 @@ export default function EditInternshipPage() {
                 onChange={handleChange}
                 required
                 rows={6}
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="Describe the internship role, responsibilities, and what the intern will learn..."
               />
             </div>
@@ -246,7 +246,7 @@ export default function EditInternshipPage() {
                 value={formData.location}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="e.g. Remote, New York, NY"
               />
             </div>
@@ -262,7 +262,7 @@ export default function EditInternshipPage() {
                   name="salary_min"
                   value={formData.salary_min}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                   placeholder="e.g. 1000"
                 />
               </div>
@@ -277,7 +277,7 @@ export default function EditInternshipPage() {
                   name="salary_max"
                   value={formData.salary_max}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                   placeholder="e.g. 2000"
                 />
               </div>
@@ -295,7 +295,7 @@ export default function EditInternshipPage() {
                 onChange={handleChange}
                 required
                 min="1"
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="e.g. 12"
               />
             </div>
@@ -311,10 +311,10 @@ export default function EditInternshipPage() {
                 value={formData.required_skills}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
                 placeholder="e.g. React, TypeScript, Node.js (comma-separated)"
               />
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-white/60 mt-1">
                 Enter skills separated by commas
               </p>
             </div>
@@ -329,7 +329,7 @@ export default function EditInternshipPage() {
                 value={formData.status}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-4 py-2 bg-[#05040f] border rounded-lg focus:ring-2 focus:ring-violet-500/60 focus:border-transparent"
               >
                 <option value="open">Open</option>
                 <option value="closed">Closed</option>
@@ -341,13 +341,13 @@ export default function EditInternshipPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-3 px-6 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="flex-1 py-3 px-6 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
                 {isSubmitting ? "Updating..." : "Update Internship"}
               </button>
               <Link
                 href="/internships/manage"
-                className="flex-1 py-3 px-6 bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition-colors text-center font-medium"
+                className="flex-1 py-3 px-6 bg-white/5 text-secondary-foreground rounded-lg hover:opacity-90 transition-colors text-center font-medium"
               >
                 Cancel
               </Link>

@@ -100,135 +100,142 @@ export default function MentorDashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="mentor" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="w-8 h-8 rounded-full border-2 border-violet-500 border-t-transparent animate-spin" />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="mentor" />
       <main className="flex-1 overflow-auto">
-      <div className="max-w-7xl mx-auto p-6">
-            {/* Welcome Section */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Welcome, {profile?.full_name || user?.email}</h1>
-              <p className="text-muted-foreground mt-2">Manage your internships and guide your students to success</p>
-            </div>
+        <div className="max-w-7xl mx-auto p-6">
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {[
-                {
-                  title: "Active Internships",
-                  value: stats.internships,
-                  Icon: Briefcase,
-                },
-                {
-                  title: "Total Applications",
-                  value: stats.applications,
-                  Icon: Clipboard,
-                },
-                {
-                  title: "Accepted Students",
-                  value: stats.accepted,
-                  Icon: CheckCircle,
-                },
-              ].map((stat, idx) => (
-                <div
-                  key={idx}
-                  className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-muted-foreground text-sm">{stat.title}</p>
-                      <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
-                    </div>
-                    <stat.Icon className="w-6 h-6 text-primary" />
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Mentor
+            </div>
+            <h1 className="text-3xl font-black text-white">
+              Welcome, <span className="bg-linear-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">{profile?.full_name?.split(" ")[0] || user?.email}</span>
+            </h1>
+            <p className="text-white/40 mt-1">Manage your internships and guide your students to success</p>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {[
+              { title: "Active Internships", value: stats.internships, Icon: Briefcase, color: "from-emerald-500/20 to-emerald-600/5", border: "border-emerald-500/20", iconColor: "text-emerald-400" },
+              { title: "Total Applications", value: stats.applications, Icon: Clipboard, color: "from-violet-500/20 to-violet-600/5", border: "border-violet-500/20", iconColor: "text-violet-400" },
+              { title: "Accepted Students", value: stats.accepted, Icon: CheckCircle, color: "from-fuchsia-500/20 to-fuchsia-600/5", border: "border-fuchsia-500/20", iconColor: "text-fuchsia-400" },
+            ].map((stat, idx) => (
+              <div
+                key={idx}
+                className={`relative bg-linear-to-br ${stat.color} border ${stat.border} rounded-2xl p-6 overflow-hidden`}
+              >
+                <div className="absolute inset-0 bg-[#05040f]/70 rounded-2xl" />
+                <div className="relative flex items-start justify-between">
+                  <div>
+                    <p className="text-white/50 text-sm font-medium">{stat.title}</p>
+                    <p className="text-3xl font-black text-white mt-2">{stat.value}</p>
+                  </div>
+                  <div className={`p-2.5 rounded-xl bg-white/5 ${stat.iconColor}`}>
+                    <stat.Icon className="w-5 h-5" />
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Quick Actions */}
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Link
-                  href="/internships/manage"
-                  className="bg-primary text-primary-foreground p-6 rounded-lg hover:opacity-90 transition-colors"
-                >
-                  <h3 className="font-bold mb-1">Create Internship</h3>
-                  <p className="text-sm opacity-90">Post a new opportunity</p>
-                </Link>
-                <Link
-                  href="/applicants"
-                  className="bg-card border border-border p-6 rounded-lg hover:bg-secondary transition-colors"
-                >
-                  <h3 className="font-bold text-foreground mb-1">Review Applicants</h3>
-                  <p className="text-sm text-muted-foreground">Check pending applications</p>
-                </Link>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Recent Applications */}
-            <div>
-              <h2 className="text-xl font-bold text-foreground mb-4">Recent Applications</h2>
-              <div className="bg-card border border-border rounded-lg overflow-hidden">
-                {recentApplications.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="border-b border-border bg-secondary">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Internship</th>
-                          <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Status</th>
-                          <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Applied On</th>
-                          <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {recentApplications.map((app) => (
-                          <tr key={app.id} className="border-b border-border hover:bg-secondary transition-colors">
-                            <td className="px-6 py-4 text-sm text-foreground">{app.internship?.title}</td>
-                            <td className="px-6 py-4 text-sm">
-                              <span
-                                className={`px-2 py-1 rounded text-xs font-medium capitalize ${
-                                  app.status === "accepted"
-                                    ? "bg-green-100 text-green-800"
-                                    : app.status === "rejected"
-                                      ? "bg-red-100 text-red-800"
-                                      : "bg-yellow-100 text-yellow-800"
-                                }`}
-                              >
-                                {app.status}
-                              </span>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-muted-foreground">
-                              {new Date(app.submitted_at).toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4 text-sm">
-                              <Link href={`/applicants/${app.id}`} className="text-primary hover:underline">
-                                Review
-                              </Link>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+          {/* Quick Actions */}
+          <div className="mb-8">
+            <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link
+                href="/internships/manage"
+                className="group relative overflow-hidden bg-linear-to-r from-emerald-500 to-teal-500 p-6 rounded-2xl hover:shadow-lg hover:shadow-emerald-500/20 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-bold text-white mb-1">Create Internship</h3>
+                    <p className="text-sm text-white/70">Post a new opportunity</p>
                   </div>
-                ) : (
-                  <div className="p-12 text-center">
-                    <p className="text-muted-foreground">No applications yet</p>
+                  <Briefcase className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </div>
+              </Link>
+              <Link
+                href="/applicants"
+                className="group bg-white/4 border border-white/8 p-6 rounded-2xl hover:bg-white/6 hover:border-emerald-500/30 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-bold text-white mb-1">Review Applicants</h3>
+                    <p className="text-sm text-white/40">Check pending applications</p>
                   </div>
-                )}
-              </div>
+                  <CheckCircle className="w-5 h-5 text-white/40 group-hover:text-emerald-400 transition-colors" />
+                </div>
+              </Link>
             </div>
           </div>
-        </main>
-      </div>
-    )
-  }
+
+          {/* Recent Applications */}
+          <div>
+            <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-4">Recent Applications</h2>
+            <div className="bg-white/4 border border-white/8 rounded-2xl overflow-hidden">
+              {recentApplications.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="border-b border-white/6">
+                      <tr>
+                        {["Internship", "Status", "Applied On", "Action"].map((h) => (
+                          <th key={h} className="px-6 py-3 text-left text-xs font-semibold text-white/30 uppercase tracking-wider">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {recentApplications.map((app) => (
+                        <tr key={app.id} className="border-b border-white/4 hover:bg-white/3 transition-colors">
+                          <td className="px-6 py-4 text-sm text-white">{app.internship?.title}</td>
+                          <td className="px-6 py-4 text-sm">
+                            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${
+                              app.status === "accepted" ? "bg-emerald-500/15 text-emerald-300"
+                              : app.status === "rejected" ? "bg-red-500/15 text-red-300"
+                              : "bg-amber-500/15 text-amber-300"
+                            }`}>
+                              {app.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-white/40">
+                            {new Date(app.submitted_at).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 text-sm">
+                            <Link href={`/applicants/${app.id}`} className="text-violet-400 hover:text-violet-300 transition-colors font-medium">
+                              Review
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="p-12 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-white/4 flex items-center justify-center mx-auto mb-4">
+                    <Clipboard className="w-7 h-7 text-white/20" />
+                  </div>
+                  <p className="text-white/30">No applications yet</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  )
+}

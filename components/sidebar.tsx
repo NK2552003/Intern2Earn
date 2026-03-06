@@ -170,7 +170,7 @@ export default function Sidebar({ role }: SidebarProps) {
           onClick={() => setIsExpanded(!isExpanded)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="p-2 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity shadow-lg"
+          className="p-2 rounded-xl bg-linear-to-br from-violet-500 to-fuchsia-500 text-white hover:opacity-90 transition-opacity shadow-lg"
         >
           {isExpanded ? <X size={24} /> : <Menu size={24} />}
         </motion.button>
@@ -184,18 +184,18 @@ export default function Sidebar({ role }: SidebarProps) {
         transition={{ duration: 0.3, ease: "easeInOut" }}
         onMouseEnter={() => !isMobile && setIsHovering(true)}
         onMouseLeave={() => !isMobile && setIsHovering(false)}
-        className="bg-card border-r border-border min-h-screen sticky top-0 flex flex-col overflow-hidden shadow-xl z-40"
+        className="bg-[#05040f] border-r border-white/6 min-h-screen sticky top-0 flex flex-col overflow-hidden shadow-2xl shadow-black/40 z-40"
       >
         {/* Top Section with Logo and User */}
-        <div className="px-3 pt-4 pb-4 border-b border-border space-y-4">
+        <div className="px-3 pt-4 pb-4 border-b border-white/6 space-y-4">
           {/* Logo - Always visible but constrained */}
           <Link
             href="/"
-            className={`flex items-center gap-3 px-3 py-2 rounded-xl bg-linear-to-r from-primary/10 to-primary/5 hover:bg-primary/15 transition-colors group ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-xl bg-linear-to-r from-violet-500/10 to-fuchsia-500/5 hover:from-violet-500/20 hover:to-fuchsia-500/10 transition-colors group ${
               !shouldShowExpanded ? "justify-center" : ""
             }`}
           >
-            <div className="p-2 rounded-lg bg-primary text-primary-foreground group-hover:shadow-lg transition-shadow shrink-0">
+            <div className="p-2 rounded-lg bg-linear-to-br from-violet-500 to-fuchsia-500 text-white group-hover:shadow-lg group-hover:shadow-violet-500/30 transition-shadow shrink-0">
               <Home size={20} />
             </div>
             <motion.div
@@ -204,8 +204,8 @@ export default function Sidebar({ role }: SidebarProps) {
               transition={{ duration: 0.2 }}
               className="whitespace-nowrap overflow-hidden"
             >
-              <p className="text-sm font-bold text-foreground">Inter2Earn</p>
-              <p className="text-xs text-muted-foreground">Platform</p>
+              <p className="text-sm font-bold bg-linear-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Upskillify</p>
+              <p className="text-xs text-white/40">Platform</p>
             </motion.div>
           </Link>
 
@@ -220,7 +220,7 @@ export default function Sidebar({ role }: SidebarProps) {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-secondary/50 transition-all group relative ${
+              <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-all group relative ${
                 !shouldShowExpanded ? "justify-center" : ""
               }`}>
                 <div className="shrink-0 relative">
@@ -228,10 +228,10 @@ export default function Sidebar({ role }: SidebarProps) {
                     <img
                       src={clerkUser.imageUrl}
                       alt={clerkUser.fullName || "User"}
-                      className="w-10 h-10 rounded-full object-cover border-2 border-primary/50 group-hover:border-primary transition-colors"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-violet-500/50 group-hover:border-violet-400 transition-colors"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-primary to-primary/60 flex items-center justify-center text-primary-foreground text-sm font-bold border border-primary/30">
+                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-sm font-bold border border-violet-500/30">
                       {clerkUser.firstName?.charAt(0)}
                     </div>
                   )}
@@ -244,8 +244,8 @@ export default function Sidebar({ role }: SidebarProps) {
                   transition={{ duration: 0.2 }}
                   className="flex-1 min-w-0 text-left whitespace-nowrap overflow-hidden"
                 >
-                  <p className="text-sm font-semibold text-foreground truncate">{clerkUser.fullName}</p>
-                  <p className="text-xs text-muted-foreground truncate">{userProfile?.role || "User"}</p>
+                  <p className="text-sm font-semibold text-white truncate">{clerkUser.fullName}</p>
+                  <p className="text-xs text-white/40 truncate capitalize">{userProfile?.role || "User"}</p>
                 </motion.div>
 
                 <motion.div
@@ -285,7 +285,7 @@ export default function Sidebar({ role }: SidebarProps) {
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider px-3">
+                        <p className="text-xs font-semibold text-white/25 uppercase tracking-wider px-3">
                           {categoryLabels[category]}
                         </p>
                       </motion.div>
@@ -310,8 +310,8 @@ export default function Sidebar({ role }: SidebarProps) {
                             !shouldShowExpanded ? "justify-center" : ""
                           } ${
                             isActive
-                              ? "bg-primary text-primary-foreground shadow-lg"
-                              : "text-foreground hover:bg-secondary/40"
+                              ? "bg-violet-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10"
+                              : "text-white/60 hover:bg-white/5 hover:text-white"
                           }`}
                           title={!shouldShowExpanded ? item.label : undefined}
                         >
@@ -332,7 +332,7 @@ export default function Sidebar({ role }: SidebarProps) {
                               layoutId="activeIndicator"
                               className="absolute right-2 top-1/2 transform -translate-y-1/2 shrink-0"
                             >
-                              <ChevronRight size={16} className="text-primary-foreground" />
+                              <ChevronRight size={16} className="text-violet-300" />
                             </motion.div>
                           )}
                         </Link>
@@ -346,7 +346,7 @@ export default function Sidebar({ role }: SidebarProps) {
         </nav>
 
         {/* Bottom Section */}
-        <div className="border-t border-border p-3 space-y-2">
+        <div className="border-t border-white/6 p-3 space-y-2">
           {/* Logout Button */}
           <motion.button
             onClick={handleLogout}
@@ -355,8 +355,8 @@ export default function Sidebar({ role }: SidebarProps) {
             whileTap={{ scale: 0.98 }}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
               shouldShowExpanded
-                ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20"
-                : "text-red-500 justify-center"
+                ? "text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                : "text-red-400 justify-center hover:bg-red-500/10"
             }`}
             title={!shouldShowExpanded ? "Logout" : undefined}
           >
@@ -377,7 +377,7 @@ export default function Sidebar({ role }: SidebarProps) {
               onClick={handleToggleExpand}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-muted-foreground hover:bg-secondary/50 transition-all duration-200 text-sm justify-center"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/30 hover:bg-white/5 hover:text-white/60 transition-all duration-200 text-sm justify-center"
               title={isManuallyExpanded ? "Collapse sidebar" : "Expand sidebar"}
             >
               {isManuallyExpanded ? <X size={20} /> : <Menu size={20} />}

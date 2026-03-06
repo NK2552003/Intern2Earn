@@ -9,7 +9,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Inter2Earn - Internship Platform",
+  title: "Upskillify - Internship Platform",
   description: "Connect students with mentors and internship opportunities",
   generator: "v0.app",
   icons: {
@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning className="dark">
         <body className={`font-sans antialiased`}>
           {children}
           <Analytics />

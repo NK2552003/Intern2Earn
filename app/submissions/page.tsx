@@ -240,42 +240,42 @@ export default function SubmissionsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "approved":
-        return "bg-green-100 text-green-800"
+        return "bg-emerald-500/15 text-emerald-300"
       case "revision_needed":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-amber-500/15 text-amber-300"
       case "rejected":
-        return "bg-red-100 text-red-800"
+        return "bg-red-500/15 text-red-300"
       case "pending":
-        return "bg-blue-100 text-blue-800"
+        return "bg-violet-500/15 text-violet-300"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-white/8 text-white/60"
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="student" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="student" />
       <main className="flex-1 overflow-auto">
       <div className="max-w-5xl mx-auto p-6">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">My Submissions</h1>
-            <p className="text-muted-foreground mt-2">Track your project submissions</p>
+            <h1 className="text-3xl font-bold text-white">My Submissions</h1>
+            <p className="text-white/60 mt-2">Track your project submissions</p>
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
+            className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors"
           >
             {showForm ? "Cancel" : "New Submission"}
           </button>
@@ -283,16 +283,16 @@ export default function SubmissionsPage() {
 
         {/* Form */}
         {showForm && (
-          <div className="bg-card border border-border rounded-lg p-8 mb-8">
-            <h2 className="text-xl font-bold text-foreground mb-6">Create New Submission</h2>
+          <div className="bg-white/5 border border-white/8 rounded-lg p-8 mb-8">
+            <h2 className="text-xl font-bold text-white mb-6">Create New Submission</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Internship</label>
+                <label className="block text-sm font-medium text-white mb-2">Internship</label>
                 <select
                   required
                   value={formData.application_id}
                   onChange={(e) => setFormData({ ...formData, application_id: e.target.value })}
-                  className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                 >
                   <option value="">Select an internship</option>
                   {acceptedApps.map((app) => (
@@ -304,47 +304,47 @@ export default function SubmissionsPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Submission Title</label>
+                <label className="block text-sm font-medium text-white mb-2">Submission Title</label>
                 <input
                   type="text"
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                   placeholder="e.g., Q1 Project Deliverable"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Description</label>
+                <label className="block text-sm font-medium text-white mb-2">Description</label>
                 <textarea
                   required
                   rows={4}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                  className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                   placeholder="Describe your submission..."
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Project URL (optional)</label>
+                  <label className="block text-sm font-medium text-white mb-2">Project URL (optional)</label>
                   <input
                     type="url"
                     value={formData.project_url}
                     onChange={(e) => setFormData({ ...formData, project_url: e.target.value })}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                     placeholder="https://example.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">GitHub URL (optional)</label>
+                  <label className="block text-sm font-medium text-white mb-2">GitHub URL (optional)</label>
                   <input
                     type="url"
                     value={formData.github_url}
                     onChange={(e) => setFormData({ ...formData, github_url: e.target.value })}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                     placeholder="https://github.com/username/repo"
                   />
                 </div>
@@ -353,7 +353,7 @@ export default function SubmissionsPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                className="w-full py-2 px-4 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
@@ -366,12 +366,12 @@ export default function SubmissionsPage() {
           {submissions.map((submission) => (
             <div
               key={submission.id}
-              className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+              className="bg-white/5 border border-white/8 rounded-lg p-6 hover:shadow-lg transition-shadow"
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="font-bold text-lg text-foreground">{submission.title}</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <h3 className="font-bold text-lg text-white">{submission.title}</h3>
+                  <p className="text-sm text-white/60">
                     {submission.application?.internship?.title} • {submission.application?.internship?.company_name}
                   </p>
                 </div>
@@ -385,19 +385,19 @@ export default function SubmissionsPage() {
                   </span>
                   <button
                     onClick={() => setSelectedSubmission(submission)}
-                    className="px-3 py-1 bg-primary text-primary-foreground rounded text-xs font-medium hover:opacity-90"
+                    className="px-3 py-1 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded text-xs font-medium hover:opacity-90"
                   >
                     View Details
                   </button>
                 </div>
               </div>
-              <p className="text-foreground mb-4">{submission.description}</p>
+              <p className="text-white mb-4">{submission.description}</p>
               <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white/60">
                   Submitted: {new Date(submission.submission_date).toLocaleDateString()}
                 </p>
                 {submission.mentor_feedback && (
-                  <span className="text-xs text-primary font-medium">Has Feedback</span>
+                  <span className="text-xs text-violet-400 font-medium">Has Feedback</span>
                 )}
               </div>
             </div>
@@ -407,11 +407,11 @@ export default function SubmissionsPage() {
         {/* Submission Detail Modal */}
         {selectedSubmission && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-card border border-border rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white/5 border border-white/8 rounded-lg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground">{selectedSubmission.title}</h2>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <h2 className="text-2xl font-bold text-white">{selectedSubmission.title}</h2>
+                  <p className="text-sm text-white/60 mt-1">
                     {selectedSubmission.application?.internship?.title}
                   </p>
                 </div>
@@ -421,7 +421,7 @@ export default function SubmissionsPage() {
                     setReviews([])
                     setNewMessage("")
                   }}
-                  className="text-muted-foreground hover:text-foreground text-2xl"
+                  className="text-white/60 hover:text-white text-2xl"
                 >
                   ×
                 </button>
@@ -429,18 +429,18 @@ export default function SubmissionsPage() {
 
               <div className="space-y-6 mb-6">
                 <div>
-                  <h3 className="font-medium text-foreground mb-2">Description</h3>
-                  <p className="text-foreground whitespace-pre-wrap">{selectedSubmission.description}</p>
+                  <h3 className="font-medium text-white mb-2">Description</h3>
+                  <p className="text-white whitespace-pre-wrap">{selectedSubmission.description}</p>
                 </div>
 
                 {selectedSubmission.project_url && (
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">Project URL</h3>
+                    <h3 className="font-medium text-white mb-2">Project URL</h3>
                     <a
                       href={selectedSubmission.project_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline break-all"
+                      className="text-violet-400 hover:underline break-all"
                     >
                       {selectedSubmission.project_url}
                     </a>
@@ -449,12 +449,12 @@ export default function SubmissionsPage() {
 
                 {selectedSubmission.github_url && (
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">GitHub URL</h3>
+                    <h3 className="font-medium text-white mb-2">GitHub URL</h3>
                     <a
                       href={selectedSubmission.github_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline break-all"
+                      className="text-violet-400 hover:underline break-all"
                     >
                       {selectedSubmission.github_url}
                     </a>
@@ -462,7 +462,7 @@ export default function SubmissionsPage() {
                 )}
 
                 <div>
-                  <h3 className="font-medium text-foreground mb-2">Status</h3>
+                  <h3 className="font-medium text-white mb-2">Status</h3>
                   <span
                     className={`inline-block px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(
                       selectedSubmission.status,
@@ -474,18 +474,18 @@ export default function SubmissionsPage() {
 
                 {selectedSubmission.mentor_feedback && (
                   <div>
-                    <h3 className="font-medium text-foreground mb-2">Mentor Feedback</h3>
-                    <div className="bg-secondary/30 border border-border rounded-lg p-4">
-                      <p className="text-foreground whitespace-pre-wrap">{selectedSubmission.mentor_feedback}</p>
+                    <h3 className="font-medium text-white mb-2">Mentor Feedback</h3>
+                    <div className="bg-white/3 border border-white/8 rounded-lg p-4">
+                      <p className="text-white whitespace-pre-wrap">{selectedSubmission.mentor_feedback}</p>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Chat/Discussion Section */}
-              <div className="border border-border rounded-lg bg-secondary/30">
-                <div className="p-4 border-b border-border">
-                  <h3 className="font-medium text-foreground">Discussion with Mentor</h3>
+              <div className="border border-white/8 rounded-lg bg-white/3">
+                <div className="p-4 border-b border-white/8">
+                  <h3 className="font-medium text-white">Discussion with Mentor</h3>
                 </div>
                 <div className="p-4 max-h-64 overflow-y-auto space-y-3">
                   {reviews.length > 0 ? (
@@ -494,26 +494,26 @@ export default function SubmissionsPage() {
                         key={review.id}
                         className={`p-3 rounded-lg ${
                           review.reviewer_id === clerkUser?.id
-                            ? "bg-primary/10 ml-8"
-                            : "bg-secondary mr-8"
+                            ? "bg-violet-500/10 ml-8"
+                            : "bg-white/5 mr-8"
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium text-foreground">
+                          <span className="text-sm font-medium text-white">
                             {review.reviewer?.full_name} ({review.reviewer?.role})
                           </span>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs text-white/60">
                             {new Date(review.created_at).toLocaleString()}
                           </span>
                         </div>
-                        <p className="text-sm text-foreground">{review.comment}</p>
+                        <p className="text-sm text-white">{review.comment}</p>
                       </div>
                     ))
                   ) : (
-                    <p className="text-sm text-muted-foreground text-center py-4">No messages yet</p>
+                    <p className="text-sm text-white/60 text-center py-4">No messages yet</p>
                   )}
                 </div>
-                <div className="p-4 border-t border-border">
+                <div className="p-4 border-t border-white/8">
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -521,12 +521,12 @@ export default function SubmissionsPage() {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                       placeholder="Type a message to your mentor..."
-                      className="flex-1 px-3 py-2 bg-input border border-border rounded-lg text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="flex-1 px-3 py-2 bg-white/6 border border-white/8 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                     />
                     <button
                       onClick={handleSendMessage}
                       disabled={isSendingMessage || !newMessage.trim()}
-                      className="px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                      className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                     >
                       Send
                     </button>
@@ -538,8 +538,8 @@ export default function SubmissionsPage() {
         )}
 
         {submissions.length === 0 && !showForm && (
-          <div className="text-center py-12 bg-card border border-border rounded-lg">
-            <p className="text-muted-foreground mb-4">You haven't submitted any projects yet</p>
+          <div className="text-center py-12 bg-white/5 border border-white/8 rounded-lg">
+            <p className="text-white/60 mb-4">You haven't submitted any projects yet</p>
           </div>
         )}
       </div>

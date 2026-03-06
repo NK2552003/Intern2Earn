@@ -115,7 +115,7 @@ export default function ReportsPage() {
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
       </div>
     )
   }
@@ -139,7 +139,7 @@ export default function ReportsPage() {
   )
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-[#05040f]">
       <div className="hidden md:block">
         <Sidebar role="admin" />
       </div>
@@ -149,35 +149,35 @@ export default function ReportsPage() {
       <main className="flex-1 overflow-auto">
       <div className="max-w-7xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Reports & Analytics</h1>
-              <p className="text-muted-foreground mt-2">Platform statistics and insights</p>
+              <h1 className="text-3xl font-bold text-white">Reports & Analytics</h1>
+              <p className="text-white/60 mt-2">Platform statistics and insights</p>
             </div>
 
             {/* User Statistics */}
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-4">User Statistics</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">User Statistics</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
                   title="Total Students"
                   value={reportData.totalStudents}
-                  bgColor="bg-blue-500"
+                  bgColor="bg-violet-500/10"
                 />
                 <StatCard
                   title="Total Mentors"
                   value={reportData.totalMentors}
-                  bgColor="bg-green-500"
+                  bgColor="bg-emerald-500/10"
                 />
                 <StatCard
                   title="Total Admins"
                   value={1}
-                  bgColor="bg-purple-500"
+                  bgColor="bg-fuchsia-500/10"
                 />
               </div>
             </div>
 
             {/* Internship Statistics */}
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-4">Internship Statistics</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Internship Statistics</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <StatCard
                   title="Total Internships"
@@ -200,7 +200,7 @@ export default function ReportsPage() {
 
             {/* Application Statistics */}
             <div className="mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-4">Application Statistics</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Application Statistics</h2>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <StatCard
                   title="Total Applications"
@@ -227,11 +227,11 @@ export default function ReportsPage() {
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Approval Rate</h3>
+              <div className="bg-white/5 border border-white/8 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Approval Rate</h3>
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-3xl font-bold text-primary">
+                    <p className="text-3xl font-bold text-violet-400">
                       {reportData.totalApplications > 0
                         ? Math.round(
                             (reportData.approvedApplications / reportData.totalApplications) * 100
@@ -239,22 +239,22 @@ export default function ReportsPage() {
                         : 0}
                       %
                     </p>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white/60 mt-1">
                       {reportData.approvedApplications} of {reportData.totalApplications} applications
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Average Applications Per Internship</h3>
+              <div className="bg-white/5 border border-white/8 rounded-lg p-6">
+                <h3 className="text-lg font-semibold text-white mb-4">Average Applications Per Internship</h3>
                 <div>
-                  <p className="text-3xl font-bold text-primary">
+                  <p className="text-3xl font-bold text-violet-400">
                     {reportData.totalInternships > 0
                       ? (reportData.totalApplications / reportData.totalInternships).toFixed(1)
                       : 0}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white/60 mt-1">
                     Applications per internship listing
                   </p>
                 </div>

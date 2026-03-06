@@ -83,61 +83,61 @@ export default function InternshipsPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "open":
-        return "bg-green-100 text-green-800"
+        return "bg-emerald-500/15 text-emerald-300"
       case "closed":
-        return "bg-gray-100 text-gray-800"
+        return "bg-white/8 text-white/60"
       case "filled":
-        return "bg-blue-100 text-blue-800"
+        return "bg-violet-500/15 text-violet-300"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-white/8 text-white/60"
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="admin" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="admin" />
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">Internship Management</h1>
-              <p className="text-muted-foreground mt-2">Monitor all internships on the platform</p>
+              <h1 className="text-3xl font-bold text-white">Internship Management</h1>
+              <p className="text-white/60 mt-2">Monitor all internships on the platform</p>
             </div>
 
             {/* Internships Table */}
-            <div className="bg-card border border-border rounded-lg overflow-hidden">
+            <div className="bg-white/5 border border-white/8 rounded-lg overflow-hidden">
               {internships.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="border-b border-border bg-secondary">
+                    <thead className="border-b border-white/8 bg-white/5">
                       <tr>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Title</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Company</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Mentor</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Location</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Status</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium text-foreground">Created</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Title</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Company</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Mentor</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Location</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Status</th>
+                        <th className="px-6 py-3 text-left text-sm font-medium text-white">Created</th>
                       </tr>
                     </thead>
                     <tbody>
                       {internships.map((internship) => (
-                        <tr key={internship.id} className="border-b border-border hover:bg-secondary transition-colors">
-                          <td className="px-6 py-4 text-sm text-foreground">{internship.title}</td>
-                          <td className="px-6 py-4 text-sm text-foreground">{internship.company_name}</td>
-                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                        <tr key={internship.id} className="border-b border-white/8 hover:bg-white/5 transition-colors">
+                          <td className="px-6 py-4 text-sm text-white">{internship.title}</td>
+                          <td className="px-6 py-4 text-sm text-white">{internship.company_name}</td>
+                          <td className="px-6 py-4 text-sm text-white/60">
                             {internship.mentor?.full_name || "N/A"}
                           </td>
-                          <td className="px-6 py-4 text-sm text-muted-foreground">{internship.location}</td>
+                          <td className="px-6 py-4 text-sm text-white/60">{internship.location}</td>
                           <td className="px-6 py-4 text-sm">
                             <span
                               className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(
@@ -147,7 +147,7 @@ export default function InternshipsPage() {
                               {internship.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                          <td className="px-6 py-4 text-sm text-white/60">
                             {new Date(internship.created_at).toLocaleDateString()}
                           </td>
                         </tr>
@@ -156,7 +156,7 @@ export default function InternshipsPage() {
                   </table>
                 </div>
               ) : (
-                <div className="p-12 text-center text-muted-foreground">No internships found</div>
+                <div className="p-12 text-center text-white/60">No internships found</div>
               )}
             </div>
           </div>

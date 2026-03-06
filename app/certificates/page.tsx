@@ -188,24 +188,24 @@ export default function CertificatesPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="student" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="student" />
       <main className="flex-1 overflow-auto">
         <div className="max-w-5xl mx-auto p-6">
           <div className="mb-8 flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Certificates</h1>
-              <p className="text-muted-foreground mt-2">Your earned certificates and achievements</p>
+              <h1 className="text-3xl font-bold text-white">Certificates</h1>
+              <p className="text-white/60 mt-2">Your earned certificates and achievements</p>
             </div>
             <Button
               onClick={handleRefresh}
@@ -223,7 +223,7 @@ export default function CertificatesPage() {
             {certificates.map((cert) => (
               <div
                 key={cert.id}
-                className="relative bg-linear-to-br from-blue-500/10 to-cyan-500/10 border-2 border-blue-500/30 rounded-xl p-6 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300 group overflow-hidden"
+                className="relative bg-linear-to-br from-blue-500/10 to-cyan-500/10 border-2 border-violet-500/30 rounded-xl p-6 text-center hover:shadow-2xl hover:scale-105 transition-all duration-300 group overflow-hidden"
               >
                 {/* Background Decoration */}
                 <div className="absolute inset-0 bg-linear-to-br from-blue-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -237,14 +237,14 @@ export default function CertificatesPage() {
                     </div>
                   </div>
                   
-                  <h3 className="font-bold text-lg text-foreground mb-2 line-clamp-2">
+                  <h3 className="font-bold text-lg text-white mb-2 line-clamp-2">
                     {(cert.application?.internship as any)?.title || "Internship"}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-1">
+                  <p className="text-sm text-white/60 mb-1">
                     {(cert.application?.internship as any)?.company_name || "Company"}
                   </p>
-                  <p className="text-xs text-muted-foreground mb-4 flex items-center justify-center gap-1">
-                    <span className="inline-block w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                  <p className="text-xs text-white/60 mb-4 flex items-center justify-center gap-1">
+                    <span className="inline-block w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
                     Issued {new Date(cert.issued_at).toLocaleDateString()}
                   </p>
                   
@@ -293,12 +293,12 @@ export default function CertificatesPage() {
           </div>
 
           {certificates.length === 0 && (
-            <div className="text-center py-12 bg-card border border-border rounded-lg">
-              <Trophy className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-50" />
-              <p className="text-muted-foreground mb-4">
+            <div className="text-center py-12 bg-white/5 border border-white/8 rounded-lg">
+              <Trophy className="w-16 h-16 mx-auto mb-4 text-white/60 opacity-50" />
+              <p className="text-white/60 mb-4">
                 No certificates yet. Complete your internship and get your submission approved to earn your certificate!
               </p>
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="text-sm text-white/60 mt-2">
                 Certificates are automatically generated when your final submission is approved by your mentor.
               </p>
             </div>
@@ -309,10 +309,10 @@ export default function CertificatesPage() {
         {selectedCert && (
           <div className="fixed inset-0 z-50 bg-black/95 flex flex-col">
             {/* Header Bar */}
-            <div className="bg-background/95 backdrop-blur-sm border-b border-border px-6 py-4 flex items-center justify-between">
+            <div className="bg-[#05040f]/95 backdrop-blur-sm border-b border-white/8 px-6 py-4 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold text-foreground">Certificate Preview</h2>
-                <p className="text-sm text-muted-foreground">
+                <h2 className="text-xl font-bold text-white">Certificate Preview</h2>
+                <p className="text-sm text-white/60">
                   {(selectedCert.application?.internship as any)?.title || "Internship"}
                 </p>
               </div>
@@ -372,8 +372,8 @@ export default function CertificatesPage() {
             </div>
 
             {/* Footer with instructions */}
-            <div className="bg-background/95 backdrop-blur-sm border-t border-border px-6 py-3 text-center">
-              <p className="text-sm text-muted-foreground">
+            <div className="bg-[#05040f]/95 backdrop-blur-sm border-t border-white/8 px-6 py-3 text-center">
+              <p className="text-sm text-white/60">
                 Click the download buttons above to save your certificate • Press ESC or click X to close
               </p>
             </div>

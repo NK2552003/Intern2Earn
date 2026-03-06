@@ -118,7 +118,7 @@ export default function InternshipDetailPage() {
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
       </div>
     )
   }
@@ -126,7 +126,7 @@ export default function InternshipDetailPage() {
   if (!internship) {
     return (
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Internship not found</div>
+          <div className="text-white/60">Internship not found</div>
         </div>
     )
   }
@@ -136,12 +136,12 @@ export default function InternshipDetailPage() {
       <div className="max-w-5xl mx-auto p-6">
             {/* Header */}
             <div className="mb-8">
-              <button onClick={() => router.back()} className="text-primary hover:underline mb-4 font-medium">
+              <button onClick={() => router.back()} className="text-violet-400 hover:underline mb-4 font-medium">
                 ← Back
               </button>
               <div>
-                <h1 className="text-4xl font-bold text-foreground mb-2">{internship.title}</h1>
-                <p className="text-lg text-muted-foreground">{internship.company_name}</p>
+                <h1 className="text-4xl font-bold text-white mb-2">{internship.title}</h1>
+                <p className="text-lg text-white/60">{internship.company_name}</p>
               </div>
             </div>
 
@@ -149,44 +149,44 @@ export default function InternshipDetailPage() {
               {/* Main Content */}
               <div className="md:col-span-2 space-y-8">
                 {/* Details */}
-                <div className="bg-card border border-border rounded-lg p-8">
-                  <h2 className="text-2xl font-bold text-foreground mb-6">About this Internship</h2>
+                <div className="bg-white/5 border border-white/8 rounded-lg p-8">
+                  <h2 className="text-2xl font-bold text-white mb-6">About this Internship</h2>
                   <div className="grid grid-cols-2 gap-6 mb-8">
                     <div>
-                      <p className="text-muted-foreground text-sm">Location</p>
-                      <p className="text-foreground font-medium">{internship.location}</p>
+                      <p className="text-white/60 text-sm">Location</p>
+                      <p className="text-white font-medium">{internship.location}</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground text-sm">Duration</p>
-                      <p className="text-foreground font-medium">{internship.duration_weeks} weeks</p>
+                      <p className="text-white/60 text-sm">Duration</p>
+                      <p className="text-white font-medium">{internship.duration_weeks} weeks</p>
                     </div>
                     {internship.salary_min && (
                       <div>
-                        <p className="text-muted-foreground text-sm">Salary</p>
-                        <p className="text-foreground font-medium text-accent">
+                        <p className="text-white/60 text-sm">Salary</p>
+                        <p className="text-white font-medium text-violet-400">
                           ${internship.salary_min.toLocaleString()} - ${internship.salary_max?.toLocaleString()}
                         </p>
                       </div>
                     )}
                     <div>
-                      <p className="text-muted-foreground text-sm">Status</p>
-                      <p className="text-foreground font-medium capitalize">{internship.status}</p>
+                      <p className="text-white/60 text-sm">Status</p>
+                      <p className="text-white font-medium capitalize">{internship.status}</p>
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-foreground mb-3">Description</h3>
-                    <p className="text-foreground whitespace-pre-wrap">{internship.description}</p>
+                    <h3 className="font-bold text-white mb-3">Description</h3>
+                    <p className="text-white whitespace-pre-wrap">{internship.description}</p>
                   </div>
                 </div>
 
                 {/* Required Skills */}
                 {internship.required_skills.length > 0 && (
-                  <div className="bg-card border border-border rounded-lg p-8">
-                    <h2 className="text-2xl font-bold text-foreground mb-6">Required Skills</h2>
+                  <div className="bg-white/5 border border-white/8 rounded-lg p-8">
+                    <h2 className="text-2xl font-bold text-white mb-6">Required Skills</h2>
                     <div className="flex flex-wrap gap-3">
                       {internship.required_skills.map((skill, idx) => (
-                        <span key={idx} className="px-4 py-2 bg-accent/10 text-accent rounded-lg font-medium">
+                        <span key={idx} className="px-4 py-2 bg-violet-500/15/10 text-violet-400 rounded-lg font-medium">
                           {skill}
                         </span>
                       ))}
@@ -196,23 +196,23 @@ export default function InternshipDetailPage() {
 
                 {/* Mentor Info */}
                 {internship.mentor && (
-                  <div className="bg-card border border-border rounded-lg p-8">
-                    <h2 className="text-2xl font-bold text-foreground mb-6">About Your Mentor</h2>
+                  <div className="bg-white/5 border border-white/8 rounded-lg p-8">
+                    <h2 className="text-2xl font-bold text-white mb-6">About Your Mentor</h2>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-muted-foreground text-sm">Name</p>
-                        <p className="text-foreground font-medium">{internship.mentor.full_name}</p>
+                        <p className="text-white/60 text-sm">Name</p>
+                        <p className="text-white font-medium">{internship.mentor.full_name}</p>
                       </div>
                       {internship.mentor.location && (
                         <div>
-                          <p className="text-muted-foreground text-sm">Location</p>
-                          <p className="text-foreground">{internship.mentor.location}</p>
+                          <p className="text-white/60 text-sm">Location</p>
+                          <p className="text-white">{internship.mentor.location}</p>
                         </div>
                       )}
                       {internship.mentor.bio && (
                         <div>
-                          <p className="text-muted-foreground text-sm">Bio</p>
-                          <p className="text-foreground">{internship.mentor.bio}</p>
+                          <p className="text-white/60 text-sm">Bio</p>
+                          <p className="text-white">{internship.mentor.bio}</p>
                         </div>
                       )}
                     </div>
@@ -224,31 +224,31 @@ export default function InternshipDetailPage() {
               <div>
                 {/* Apply Card */}
                 {!hasApplied ? (
-                  <div className="bg-card border border-border rounded-lg p-8 sticky top-6">
-                    <h3 className="font-bold text-lg text-foreground mb-6">Apply Now</h3>
+                  <div className="bg-white/5 border border-white/8 rounded-lg p-8 sticky top-6">
+                    <h3 className="font-bold text-lg text-white mb-6">Apply Now</h3>
                     <form onSubmit={handleApply} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Cover Letter</label>
+                        <label className="block text-sm font-medium text-white mb-2">Cover Letter</label>
                         <textarea
                           required
                           rows={6}
                           value={coverLetter}
                           onChange={(e) => setCoverLetter(e.target.value)}
                           placeholder="Tell us why you're interested..."
-                          className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                          className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                         />
                       </div>
                       <button
                         type="submit"
                         disabled={isApplying}
-                        className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                        className="w-full py-2 px-4 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                       >
                         {isApplying ? "Applying..." : "Apply"}
                       </button>
                     </form>
                   </div>
                 ) : (
-                  <div className="bg-green-100 text-green-800 rounded-lg p-8">
+                  <div className="bg-emerald-500/15 text-emerald-300 rounded-lg p-8">
                     <p className="font-bold text-lg mb-2">✓ Application Submitted</p>
                     <p className="text-sm">
                       You have already applied for this internship. Check your applications page for updates.

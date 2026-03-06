@@ -298,11 +298,11 @@ export default function ProgressPage() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle2 className="h-5 w-5 text-green-600" />
+        return <CheckCircle2 className="h-5 w-5 text-emerald-400" />
       case "pending_review":
-        return <Clock className="h-5 w-5 text-yellow-600" />
+        return <Clock className="h-5 w-5 text-amber-400" />
       case "ongoing":
-        return <AlertCircle className="h-5 w-5 text-blue-600" />
+        return <AlertCircle className="h-5 w-5 text-violet-400" />
       default:
         return <Clock className="h-5 w-5 text-gray-600" />
     }
@@ -311,24 +311,24 @@ export default function ProgressPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-100 text-green-800 border-green-300"
+        return "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
       case "pending_review":
-        return "bg-yellow-100 text-yellow-800 border-yellow-300"
+        return "bg-amber-500/15 text-amber-300 border-amber-500/30"
       case "ongoing":
-        return "bg-blue-100 text-blue-800 border-blue-300"
+        return "bg-violet-500/15 text-violet-300 border-violet-500/30"
       default:
-        return "bg-gray-100 text-gray-800 border-gray-300"
+        return "bg-white/8 text-white/60 border-gray-300"
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role={userRole} />
         <div className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-            <p className="text-muted-foreground">Loading progress...</p>
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
+            <p className="text-white/60">Loading progress...</p>
           </div>
         </div>
       </div>
@@ -336,14 +336,14 @@ export default function ProgressPage() {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role={userRole} />
       <main className="flex-1 overflow-auto">
       <div className="max-w-5xl mx-auto p-6">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Progress Tracking</h1>
-            <p className="text-muted-foreground mt-2">
+            <h1 className="text-3xl font-bold text-white">Progress Tracking</h1>
+            <p className="text-white/60 mt-2">
               {userRole === "student" 
                 ? "Track your weekly progress and updates" 
                 : "Review and provide feedback on student progress"}
@@ -352,7 +352,7 @@ export default function ProgressPage() {
           {userRole === "student" && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
+              className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors"
             >
               {showForm ? "Cancel" : "Log Progress"}
             </button>
@@ -370,12 +370,12 @@ export default function ProgressPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-foreground">Internship</label>
+                    <label className="block text-sm font-medium text-white">Internship</label>
                     <select
                       required
                       value={formData.application_id}
                       onChange={(e) => setFormData({ ...formData, application_id: e.target.value })}
-                      className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-2 bg-[#05040f] border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                     >
                       <option value="">Select an internship</option>
                       {acceptedApps.map((app) => (
@@ -386,30 +386,30 @@ export default function ProgressPage() {
                     </select>
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-foreground">Week Number</label>
+                    <label className="block text-sm font-medium text-white">Week Number</label>
                     <input
                       type="number"
                       required
                       min="1"
                       value={formData.week_number}
                       onChange={(e) => setFormData({ ...formData, week_number: e.target.value })}
-                      className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-2 bg-[#05040f] border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                       placeholder="1"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-foreground">Progress Description</label>
+                  <label className="block text-sm font-medium text-white">Progress Description</label>
                   <textarea
                     required
                     rows={6}
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                    className="w-full px-4 py-2 bg-[#05040f] border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                     placeholder="What did you accomplish this week? Include key milestones, challenges faced, and learnings..."
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white/60">
                     Be specific about your achievements and progress
                   </p>
                 </div>
@@ -418,7 +418,7 @@ export default function ProgressPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 py-2 px-4 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
@@ -438,7 +438,7 @@ export default function ProgressPage() {
                       setShowForm(false)
                       setFormData({ week_number: "", description: "", application_id: "" })
                     }}
-                    className="px-6 py-2 border border-border rounded-lg hover:bg-secondary transition-colors"
+                    className="px-6 py-2 border border-white/8 rounded-lg hover:bg-white/5 transition-colors"
                   >
                     Cancel
                   </button>
@@ -453,7 +453,7 @@ export default function ProgressPage() {
           {progress.map((entry, idx) => (
             <div key={entry.id} className="flex gap-6">
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg border-4 border-primary/20">
+                <div className="w-12 h-12 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-full flex items-center justify-center font-bold text-lg border-4 border-violet-500/20">
                   W{entry.week_number}
                 </div>
                 {idx < progress.length - 1 && <div className="w-1 flex-1 bg-border mt-2"></div>}
@@ -479,7 +479,7 @@ export default function ProgressPage() {
                           {userRole === "mentor" && entry.student_name && (
                             <div className="flex items-center gap-2 text-sm">
                               <span className="font-medium">Student:</span> {entry.student_name}
-                              <span className="text-muted-foreground">•</span>
+                              <span className="text-white/60">•</span>
                               <span className="font-medium">Internship:</span> {entry.internship_title}
                             </div>
                           )}
@@ -493,8 +493,8 @@ export default function ProgressPage() {
                   <CardContent className="space-y-4">
                     {/* Progress Description */}
                     <div>
-                      <h4 className="text-sm font-semibold text-foreground mb-2">Progress Details</h4>
-                      <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">
+                      <h4 className="text-sm font-semibold text-white mb-2">Progress Details</h4>
+                      <p className="text-white text-sm leading-relaxed whitespace-pre-wrap">
                         {entry.description}
                       </p>
                     </div>
@@ -503,22 +503,22 @@ export default function ProgressPage() {
 
                     {/* Mentor Comment Section */}
                     {entry.mentor_comment ? (
-                      <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                      <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <MessageSquare className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                          <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-300">
+                          <MessageSquare className="h-4 w-4 text-violet-400" />
+                          <h4 className="text-sm font-semibold text-violet-200">
                             Mentor Feedback
                           </h4>
                         </div>
-                        <p className="text-sm text-blue-800 dark:text-blue-200 leading-relaxed">
+                        <p className="text-sm text-violet-300 leading-relaxed">
                           {entry.mentor_comment}
                         </p>
                       </div>
                     ) : (
-                      <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                         <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                          <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                          <Clock className="h-4 w-4 text-amber-400" />
+                          <p className="text-sm text-amber-300">
                             Waiting for mentor feedback
                           </p>
                         </div>
@@ -531,8 +531,8 @@ export default function ProgressPage() {
                     {userRole === "student" && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                          <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                          <h4 className="text-sm font-semibold text-foreground">Add a Comment</h4>
+                          <MessageSquare className="h-4 w-4 text-white/60" />
+                          <h4 className="text-sm font-semibold text-white">Add a Comment</h4>
                         </div>
                         <div className="flex gap-2">
                           <textarea
@@ -544,7 +544,7 @@ export default function ProgressPage() {
                               }))
                             }
                             placeholder="Add additional notes or updates about this week's progress..."
-                            className="flex-1 px-3 py-2 text-sm border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                            className="flex-1 px-3 py-2 text-sm border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                             rows={3}
                           />
                         </div>
@@ -555,7 +555,7 @@ export default function ProgressPage() {
                             !studentComment[entry.id] || 
                             !studentComment[entry.id].trim()
                           }
-                          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {isAddingComment[entry.id] ? (
                             <>
@@ -576,8 +576,8 @@ export default function ProgressPage() {
                     {userRole === "mentor" && (
                       <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                          <MessageSquare className="h-4 w-4 text-blue-600" />
-                          <h4 className="text-sm font-semibold text-foreground">
+                          <MessageSquare className="h-4 w-4 text-violet-400" />
+                          <h4 className="text-sm font-semibold text-white">
                             {entry.mentor_comment ? "Update Feedback" : "Provide Feedback"}
                           </h4>
                         </div>
@@ -591,7 +591,7 @@ export default function ProgressPage() {
                               }))
                             }
                             placeholder="Provide constructive feedback on the student's progress..."
-                            className="flex-1 px-3 py-2 text-sm border border-blue-200 dark:border-blue-800 rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            className="flex-1 px-3 py-2 text-sm border border-violet-500/30 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                             rows={3}
                           />
                         </div>
@@ -628,24 +628,24 @@ export default function ProgressPage() {
         {progress.length === 0 && !showForm && (
           <Card>
             <CardContent className="text-center py-12">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                <Clock className="h-8 w-8 text-primary" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-500/10 mb-4">
+                <Clock className="h-8 w-8 text-violet-400" />
               </div>
               {userRole === "student" ? (
                 <>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">No Progress Entries Yet</h3>
-                  <p className="text-muted-foreground mb-4">Start tracking your internship journey by logging your first week!</p>
+                  <h3 className="text-lg font-semibold text-white mb-2">No Progress Entries Yet</h3>
+                  <p className="text-white/60 mb-4">Start tracking your internship journey by logging your first week!</p>
                   <button
                     onClick={() => setShowForm(true)}
-                    className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
+                    className="px-6 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors"
                   >
                     Log Your First Week
                   </button>
                 </>
               ) : (
                 <>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">No Progress Entries to Review</h3>
-                  <p className="text-muted-foreground">
+                  <h3 className="text-lg font-semibold text-white mb-2">No Progress Entries to Review</h3>
+                  <p className="text-white/60">
                     Students haven't logged any progress yet. Progress entries will appear here once students start tracking their work.
                   </p>
                 </>

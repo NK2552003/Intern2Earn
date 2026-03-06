@@ -40,25 +40,25 @@
 }
 
 .dark {
-  --background: oklch(0.1 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.15 0.001 250);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.145 0 0);
+  --background: #05040f;
+  --foreground: oklch(0.96 0 0);
+  --card: oklch(0.12 0.008 275);
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.1 0.008 275);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.68 0.183 275);
-  --primary-foreground: oklch(0.1 0 0);
-  --secondary: oklch(0.22 0.001 45);
-  --secondary-foreground: oklch(0.68 0.183 275);
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.68 0.183 275);
-  --accent-foreground: oklch(0.1 0 0);
-  --destructive: oklch(0.557 0.204 27);
+  --primary: oklch(0.68 0.22 283);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.19 0.01 275);
+  --secondary-foreground: oklch(0.85 0 0);
+  --muted: oklch(0.2 0.005 275);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.72 0.24 290);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.21 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.2 0 0);
-  --ring: oklch(0.68 0.183 275);
+  --border: oklch(0.28 0.01 275);
+  --input: oklch(0.2 0.008 275);
+  --ring: oklch(0.68 0.22 283);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -127,4 +127,20 @@
   .transition-colors {
     @apply transition-colors duration-200;
   }
+}
+
+/* Dark scrollbar for the entire app */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #05040f;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
 }

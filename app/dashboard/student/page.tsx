@@ -85,142 +85,122 @@ export default function StudentDashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="student" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="w-8 h-8 rounded-full border-2 border-violet-500 border-t-transparent animate-spin" />
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="student" />
       <div className="flex-1 flex flex-col overflow-hidden">
         <main className="flex-1 overflow-auto">
-          <div className="p-6">
+          <div className="p-6 max-w-7xl mx-auto">
+
             {/* Welcome Section */}
-            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-              <h1 className="text-4xl font-bold text-foreground">
-                Welcome back, {profile?.full_name || user?.email}
+            <motion.div initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-300 text-xs font-medium mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                Active Student
+              </div>
+              <h1 className="text-3xl font-black text-white">
+                Welcome back, <span className="bg-linear-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">{profile?.full_name?.split(" ")[0] || "there"}</span> 👋
               </h1>
-              <p className="text-muted-foreground mt-2">Here's what's happening in your internship journey</p>
+              <p className="text-white/40 mt-1">Here's what's happening in your internship journey</p>
             </motion.div>
 
             {/* Stats Grid */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ staggerChildren: 0.1 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-            >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               {[
-                {
-                  title: "Total Applications",
-                  value: stats.applications,
-                  icon: <FileText className="w-6 h-6" />,
-                  color: "bg-blue-500",
-                },
-                {
-                  title: "Pending Reviews",
-                  value: stats.active,
-                  icon: <Clock className="w-6 h-6" />,
-                  color: "bg-yellow-500",
-                },
-                {
-                  title: "Accepted",
-                  value: stats.accepted,
-                  icon: <CheckCircle className="w-6 h-6" />,
-                  color: "bg-green-500",
-                },
+                { title: "Total Applications", value: stats.applications, icon: <FileText className="w-5 h-5" />, color: "from-violet-500/20 to-violet-600/5", border: "border-violet-500/20", iconColor: "text-violet-400" },
+                { title: "Pending Reviews", value: stats.active, icon: <Clock className="w-5 h-5" />, color: "from-amber-500/20 to-amber-600/5", border: "border-amber-500/20", iconColor: "text-amber-400" },
+                { title: "Accepted", value: stats.accepted, icon: <CheckCircle className="w-5 h-5" />, color: "from-emerald-500/20 to-emerald-600/5", border: "border-emerald-500/20", iconColor: "text-emerald-400" },
               ].map((stat, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+                  transition={{ delay: idx * 0.08 }}
+                  whileHover={{ y: -3 }}
+                  className={`relative bg-linear-to-br ${stat.color} border ${stat.border} rounded-2xl p-6 overflow-hidden`}
                 >
-                  <div className="flex items-start justify-between">
+                  <div className="absolute inset-0 bg-[#05040f]/70 rounded-2xl" />
+                  <div className="relative flex items-start justify-between">
                     <div>
-                      <p className="text-muted-foreground text-sm font-medium">{stat.title}</p>
-                      <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                      <p className="text-white/50 text-sm font-medium">{stat.title}</p>
+                      <p className="text-3xl font-black text-white mt-2">{stat.value}</p>
                     </div>
-                    <div className={`${stat.color} p-3 rounded-lg text-white`}>{stat.icon}</div>
+                    <div className={`p-2.5 rounded-xl bg-white/5 ${stat.iconColor}`}>{stat.icon}</div>
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
 
             {/* Quick Actions */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mb-8"
-            >
-              <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-primary" />
-                Quick Actions
-              </h2>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="mb-8">
+              <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-4">Quick Actions</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Link
                   href="/internships"
-                  className="bg-linear-to-r from-primary to-primary/80 text-primary-foreground p-6 rounded-lg hover:shadow-lg transition-all group"
+                  className="group relative overflow-hidden bg-linear-to-r from-violet-500 to-fuchsia-500 p-6 rounded-2xl hover:shadow-lg hover:shadow-violet-500/20 transition-all"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold mb-1">Browse Internships</h3>
-                      <p className="text-sm opacity-90">Find new opportunities</p>
+                      <h3 className="font-bold text-white mb-1">Browse Internships</h3>
+                      <p className="text-sm text-white/70">Find new opportunities</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
                 <Link
                   href="/applications"
-                  className="bg-card border border-border p-6 rounded-lg hover:bg-secondary transition-colors group"
+                  className="group bg-white/4 border border-white/8 p-6 rounded-2xl hover:bg-white/6 hover:border-violet-500/30 transition-all"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-bold text-foreground mb-1">My Applications</h3>
-                      <p className="text-sm text-muted-foreground">Check your status</p>
+                      <h3 className="font-bold text-white mb-1">My Applications</h3>
+                      <p className="text-sm text-white/40">Check your status</p>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-white/40 group-hover:translate-x-1 group-hover:text-white transition-all" />
                   </div>
                 </Link>
               </div>
             </motion.div>
 
             {/* Recent Opportunities */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                Recently Added Opportunities
-              </h2>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest">Recent Opportunities</h2>
+                <Link href="/internships" className="text-xs text-violet-400 hover:text-violet-300 transition-colors flex items-center gap-1">
+                  View all <ArrowRight size={12} />
+                </Link>
+              </div>
               {recentInternships.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {recentInternships.slice(0, 6).map((internship, idx) => (
                     <motion.div
                       key={internship.id}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: idx * 0.05 }}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35 + idx * 0.05 }}
+                      whileHover={{ y: -3 }}
                     >
                       <Link
                         href={`/internships/${internship.id}`}
-                        className="bg-card border border-border rounded-lg p-6 hover:shadow-lg hover:border-primary transition-all block h-full"
+                        className="group bg-white/4 border border-white/8 rounded-2xl p-5 hover:bg-white/6 hover:border-violet-500/30 transition-all block h-full"
                       >
-                        <h3 className="font-bold text-foreground mb-2">{internship.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">{internship.company_name}</p>
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">{internship.location}</span>
-                          <span className="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-semibold">
+                        <div className="w-9 h-9 rounded-xl bg-violet-500/15 flex items-center justify-center mb-3">
+                          <Briefcase size={16} className="text-violet-400" />
+                        </div>
+                        <h3 className="font-bold text-white mb-1 line-clamp-1">{internship.title}</h3>
+                        <p className="text-sm text-white/40 mb-3">{internship.company_name}</p>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="text-white/30">{internship.location || "Remote"}</span>
+                          <span className="bg-violet-500/15 text-violet-300 px-2 py-0.5 rounded-full font-semibold">
                             {internship.duration_weeks}w
                           </span>
                         </div>
@@ -229,12 +209,15 @@ export default function StudentDashboard() {
                   ))}
                 </div>
               ) : (
-                <div className="bg-card border border-border rounded-lg p-12 text-center">
-                  <Briefcase className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                  <p className="text-muted-foreground">No internship opportunities available at the moment</p>
+                <div className="bg-white/4 border border-white/8 rounded-2xl p-12 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-violet-500/10 flex items-center justify-center mx-auto mb-4">
+                    <Briefcase className="w-7 h-7 text-violet-400/40" />
+                  </div>
+                  <p className="text-white/30">No internship opportunities available at the moment</p>
                 </div>
               )}
             </motion.div>
+
           </div>
         </main>
       </div>

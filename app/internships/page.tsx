@@ -84,17 +84,17 @@ export default function InternshipsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="student" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="student" />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar />
@@ -102,41 +102,41 @@ export default function InternshipsPage() {
           <div className="max-w-7xl mx-auto p-6">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Browse Internships</h1>
-              <p className="text-muted-foreground">Find and apply to your next opportunity</p>
+              <h1 className="text-3xl font-bold text-white mb-2">Browse Internships</h1>
+              <p className="text-white/60">Find and apply to your next opportunity</p>
             </div>
 
             {/* Filters */}
-            <div className="bg-card border border-border rounded-lg p-6 mb-8">
+            <div className="bg-white/5 border border-white/8 rounded-lg p-6 mb-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Search</label>
+                  <label className="block text-sm font-medium text-white mb-2">Search</label>
                   <input
                     type="text"
                     placeholder="Title or company..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Location</label>
+                  <label className="block text-sm font-medium text-white mb-2">Location</label>
                   <input
                     type="text"
                     placeholder="City or region..."
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Max Duration (weeks)</label>
+                  <label className="block text-sm font-medium text-white mb-2">Max Duration (weeks)</label>
                   <input
                     type="number"
                     placeholder="e.g., 12"
                     value={durationFilter}
                     onChange={(e) => setDurationFilter(e.target.value)}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                   />
                 </div>
               </div>
@@ -148,23 +148,23 @@ export default function InternshipsPage() {
                 <Link
                   key={internship.id}
                   href={`/internships/${internship.id}`}
-                  className="bg-card border border-border rounded-lg p-6 hover:shadow-lg hover:border-primary transition-all"
+                  className="bg-white/5 border border-white/8 rounded-lg p-6 hover:shadow-lg hover:border-violet-400 transition-all"
                 >
-                  <h3 className="font-bold text-foreground text-lg mb-2">{internship.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{internship.company_name}</p>
-                  <p className="text-sm text-foreground mb-4 line-clamp-2">{internship.description}</p>
+                  <h3 className="font-bold text-white text-lg mb-2">{internship.title}</h3>
+                  <p className="text-sm text-white/60 mb-4">{internship.company_name}</p>
+                  <p className="text-sm text-white mb-4 line-clamp-2">{internship.description}</p>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between text-muted-foreground">
+                    <div className="flex items-center justify-between text-white/60">
                       <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {internship.location}</div>
                       <div className="flex items-center gap-2"><Clock className="w-4 h-4" /> {internship.duration_weeks}w</div>
                     </div>
                     {internship.salary_min && (
-                      <div className="text-accent font-medium">
+                      <div className="text-violet-400 font-medium">
                         ${internship.salary_min?.toLocaleString()} - ${internship.salary_max?.toLocaleString()}
                       </div>
                     )}
                   </div>
-                  <button className="mt-4 w-full py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors font-medium text-sm">
+                  <button className="mt-4 w-full py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors font-medium text-sm">
                     View Details
                   </button>
                 </Link>
@@ -173,14 +173,14 @@ export default function InternshipsPage() {
 
             {filteredInternships.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-muted-foreground mb-4">No internships found matching your criteria</p>
+                <p className="text-white/60 mb-4">No internships found matching your criteria</p>
                 <button
                   onClick={() => {
                     setSearchTerm("")
                     setLocationFilter("")
                     setDurationFilter("")
                   }}
-                  className="text-primary hover:underline font-medium"
+                  className="text-violet-400 hover:underline font-medium"
                 >
                   Clear filters
                 </button>

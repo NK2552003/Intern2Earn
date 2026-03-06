@@ -105,38 +105,38 @@ export default function MyStudentsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="mentor" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="mentor" />
       <main className="flex-1 overflow-auto">
       <div className="max-w-7xl mx-auto p-6">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground">My Students</h1>
-              <p className="text-muted-foreground mt-2">View and manage your mentored students</p>
+              <h1 className="text-3xl font-bold text-white">My Students</h1>
+              <p className="text-white/60 mt-2">View and manage your mentored students</p>
             </div>
 
             {/* Students Grid */}
             {students.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {students.map((student) => (
-                  <div key={student.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <div key={student.id} className="bg-white/5 border border-white/8 rounded-lg p-6 hover:shadow-lg transition-shadow">
                     <div className="mb-4">
-                      <h3 className="font-bold text-lg text-foreground">{student.full_name}</h3>
-                      <p className="text-sm text-muted-foreground">{student.email}</p>
+                      <h3 className="font-bold text-lg text-white">{student.full_name}</h3>
+                      <p className="text-sm text-white/60">{student.email}</p>
                     </div>
 
                     {student.location && (
                       <div className="mb-3">
-                        <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        <p className="text-sm text-white/60 flex items-center gap-2">
                           <MapPin className="w-4 h-4" /> {student.location}
                         </p>
                       </div>
@@ -144,21 +144,21 @@ export default function MyStudentsPage() {
 
                     {student.bio && (
                       <div className="mb-4">
-                        <p className="text-sm text-foreground">{student.bio}</p>
+                        <p className="text-sm text-white">{student.bio}</p>
                       </div>
                     )}
 
                     {student.skills && student.skills.length > 0 && (
                       <div className="mb-4">
-                        <p className="text-xs font-medium text-muted-foreground mb-2">Skills</p>
+                        <p className="text-xs font-medium text-white/60 mb-2">Skills</p>
                         <div className="flex flex-wrap gap-2">
                           {student.skills.slice(0, 3).map((skill, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-secondary text-foreground text-xs rounded">
+                            <span key={idx} className="px-2 py-1 bg-white/5 text-white text-xs rounded">
                               {skill}
                             </span>
                           ))}
                           {student.skills.length > 3 && (
-                            <span className="px-2 py-1 bg-secondary text-foreground text-xs rounded">
+                            <span className="px-2 py-1 bg-white/5 text-white text-xs rounded">
                               +{student.skills.length - 3}
                             </span>
                           )}
@@ -167,17 +167,17 @@ export default function MyStudentsPage() {
                     )}
 
                     {student.internship && (
-                      <div className="mb-4 p-3 bg-secondary rounded-lg">
-                        <p className="text-xs font-medium text-muted-foreground mb-1">Current Internship</p>
-                        <p className="text-sm font-medium text-foreground">{student.internship.title}</p>
-                        <p className="text-xs text-muted-foreground">{student.internship.company_name}</p>
+                      <div className="mb-4 p-3 bg-white/5 rounded-lg">
+                        <p className="text-xs font-medium text-white/60 mb-1">Current Internship</p>
+                        <p className="text-sm font-medium text-white">{student.internship.title}</p>
+                        <p className="text-xs text-white/60">{student.internship.company_name}</p>
                       </div>
                     )}
 
-                    <div className="flex gap-2 pt-4 border-t border-border">
+                    <div className="flex gap-2 pt-4 border-t border-white/8">
                       <a
                         href={`/profile?student=${student.id}`}
-                        className="flex-1 text-center py-2 px-3 bg-primary text-primary-foreground rounded text-sm font-medium hover:opacity-90 transition-colors"
+                        className="flex-1 text-center py-2 px-3 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded text-sm font-medium hover:opacity-90 transition-colors"
                       >
                         View Profile
                       </a>
@@ -186,9 +186,9 @@ export default function MyStudentsPage() {
                 ))}
               </div>
             ) : (
-              <div className="bg-card border border-border rounded-lg p-12 text-center">
-                <p className="text-muted-foreground mb-2">You don't have any students yet</p>
-                <p className="text-sm text-muted-foreground">Create internships to attract and mentor students</p>
+              <div className="bg-white/5 border border-white/8 rounded-lg p-12 text-center">
+                <p className="text-white/60 mb-2">You don't have any students yet</p>
+                <p className="text-sm text-white/60">Create internships to attract and mentor students</p>
               </div>
             )}
           </div>

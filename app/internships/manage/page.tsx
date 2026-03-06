@@ -129,28 +129,28 @@ export default function ManageInternshipsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="mentor" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="mentor" />
       <main className="flex-1 overflow-auto">
       <div className="max-w-7xl mx-auto p-6">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h1 className="text-3xl font-bold text-foreground">Manage Internships</h1>
-                <p className="text-muted-foreground mt-2">Create and manage your internship opportunities</p>
+                <h1 className="text-3xl font-bold text-white">Manage Internships</h1>
+                <p className="text-white/60 mt-2">Create and manage your internship opportunities</p>
               </div>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-colors"
+                className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-colors"
               >
                 {showForm ? "Cancel" : "Create Internship"}
               </button>
@@ -158,66 +158,66 @@ export default function ManageInternshipsPage() {
 
             {/* Form */}
             {showForm && (
-              <div className="bg-card border border-border rounded-lg p-8 mb-8">
-                <h2 className="text-xl font-bold text-foreground mb-6">Create New Internship</h2>
+              <div className="bg-white/5 border border-white/8 rounded-lg p-8 mb-8">
+                <h2 className="text-xl font-bold text-white mb-6">Create New Internship</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Title</label>
+                      <label className="block text-sm font-medium text-white mb-2">Title</label>
                       <input
                         type="text"
                         required
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="e.g., Frontend Developer Intern"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Company</label>
+                      <label className="block text-sm font-medium text-white mb-2">Company</label>
                       <input
                         type="text"
                         required
                         value={formData.company_name}
                         onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="Company name"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Description</label>
+                    <label className="block text-sm font-medium text-white mb-2">Description</label>
                     <textarea
                       required
                       rows={4}
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                      className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                       placeholder="Describe the internship opportunity..."
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Location</label>
+                      <label className="block text-sm font-medium text-white mb-2">Location</label>
                       <input
                         type="text"
                         required
                         value={formData.location}
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="City, Country"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Duration (weeks)</label>
+                      <label className="block text-sm font-medium text-white mb-2">Duration (weeks)</label>
                       <input
                         type="number"
                         required
                         value={formData.duration_weeks}
                         onChange={(e) => setFormData({ ...formData, duration_weeks: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="12"
                       />
                     </div>
@@ -225,34 +225,34 @@ export default function ManageInternshipsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Salary Min</label>
+                      <label className="block text-sm font-medium text-white mb-2">Salary Min</label>
                       <input
                         type="number"
                         value={formData.salary_min}
                         onChange={(e) => setFormData({ ...formData, salary_min: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="0"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-foreground mb-2">Salary Max</label>
+                      <label className="block text-sm font-medium text-white mb-2">Salary Max</label>
                       <input
                         type="number"
                         value={formData.salary_max}
                         onChange={(e) => setFormData({ ...formData, salary_max: e.target.value })}
-                        className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         placeholder="0"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Required Skills</label>
+                    <label className="block text-sm font-medium text-white mb-2">Required Skills</label>
                     <input
                       type="text"
                       value={formData.required_skills}
                       onChange={(e) => setFormData({ ...formData, required_skills: e.target.value })}
-                      className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                       placeholder="React, TypeScript, Python (comma-separated)"
                     />
                   </div>
@@ -260,7 +260,7 @@ export default function ManageInternshipsPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+                    className="w-full py-2 px-4 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
                   >
                     {isSubmitting ? "Creating..." : "Create Internship"}
                   </button>
@@ -273,16 +273,16 @@ export default function ManageInternshipsPage() {
               {internships.map((internship) => (
                 <div
                   key={internship.id}
-                  className="bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-shadow"
+                  className="bg-white/5 border border-white/8 rounded-lg p-6 hover:shadow-lg transition-shadow"
                 >
-                  <h3 className="font-bold text-lg text-foreground mb-2">{internship.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{internship.company_name}</p>
-                  <p className="text-sm text-foreground mb-4 line-clamp-2">{internship.description}</p>
-                  <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                  <h3 className="font-bold text-lg text-white mb-2">{internship.title}</h3>
+                  <p className="text-sm text-white/60 mb-4">{internship.company_name}</p>
+                  <p className="text-sm text-white mb-4 line-clamp-2">{internship.description}</p>
+                  <div className="space-y-2 text-sm text-white/60 mb-4">
                     <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> {internship.location}</div>
                     <div className="flex items-center gap-2"><Clock className="w-4 h-4" /> {internship.duration_weeks} weeks</div>
                     {internship.salary_min && (
-                      <div className="text-accent">
+                      <div className="text-violet-400">
                         ${internship.salary_min.toLocaleString()} - ${internship.salary_max.toLocaleString()}
                       </div>
                     )}
@@ -290,7 +290,7 @@ export default function ManageInternshipsPage() {
                   <div className="flex gap-2">
                     <Link
                       href={`/internships/${internship.id}/edit`}
-                      className="flex-1 py-2 px-4 bg-secondary text-foreground rounded-lg hover:opacity-90 transition-colors text-sm text-center"
+                      className="flex-1 py-2 px-4 bg-white/5 text-white rounded-lg hover:opacity-90 transition-colors text-sm text-center"
                     >
                       Edit
                     </Link>
@@ -306,9 +306,9 @@ export default function ManageInternshipsPage() {
             </div>
 
             {internships.length === 0 && !showForm && (
-              <div className="text-center py-12 bg-card border border-border rounded-lg">
-                <p className="text-muted-foreground mb-4">You haven't created any internships yet</p>
-                <button onClick={() => setShowForm(true)} className="text-primary hover:underline font-medium">
+              <div className="text-center py-12 bg-white/5 border border-white/8 rounded-lg">
+                <p className="text-white/60 mb-4">You haven't created any internships yet</p>
+                <button onClick={() => setShowForm(true)} className="text-violet-400 hover:underline font-medium">
                   Create your first internship
                 </button>
               </div>

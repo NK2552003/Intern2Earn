@@ -211,24 +211,24 @@ export default function ProfilePage() {
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case "admin":
-        return "bg-purple-100 text-purple-800 border-purple-300"
+        return "bg-fuchsia-500/15 text-fuchsia-300 border-fuchsia-500/30"
       case "mentor":
-        return "bg-blue-100 text-blue-800 border-blue-300"
+        return "bg-violet-500/15 text-violet-300 border-violet-500/30"
       case "student":
-        return "bg-green-100 text-green-800 border-green-300"
+        return "bg-emerald-500/15 text-emerald-300 border-emerald-500/30"
       default:
-        return "bg-gray-100 text-gray-800 border-gray-300"
+        return "bg-white/8 text-white/60 border-gray-300"
     }
   }
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role={userRole} />
         <div className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-            <p className="text-muted-foreground">Loading your profile...</p>
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
+            <p className="text-white/60">Loading your profile...</p>
           </div>
         </div>
       </div>
@@ -237,13 +237,13 @@ export default function ProfilePage() {
 
   if (!profile) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role={userRole} />
         <div className="flex-1 flex flex-col">
           <main className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <p className="text-red-500 mb-4">{error}</p>
-              <p className="text-muted-foreground">Redirecting to onboarding...</p>
+              <p className="text-white/60">Redirecting to onboarding...</p>
             </div>
           </main>
         </div>
@@ -254,20 +254,20 @@ export default function ProfilePage() {
   const profileCompletion = getProfileCompletion()
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role={userRole} />
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto p-6 space-y-6">
           {/* Alerts */}
           {error && (
-            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 flex items-center gap-2">
+            <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 flex items-center gap-2">
               <X className="h-5 w-5" />
               {error}
             </div>
           )}
 
           {success && (
-            <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg text-green-700 dark:text-green-400 flex items-center gap-2">
+            <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-green-700 flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5" />
               Profile updated successfully!
             </div>
@@ -278,9 +278,9 @@ export default function ProfilePage() {
             <CardContent className="pt-6">
               <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
                 {/* Avatar Section */}
-                <Avatar className="h-24 w-24 border-4 border-primary/10">
+                <Avatar className="h-24 w-24 border-4 border-violet-500/10">
                   <AvatarImage src={profile.profile_image_url || clerkUser?.imageUrl} />
-                  <AvatarFallback className="text-2xl font-bold bg-primary text-white">
+                  <AvatarFallback className="text-2xl font-bold bg-violet-500 text-white">
                     {getInitials(profile.full_name || "User")}
                   </AvatarFallback>
                 </Avatar>
@@ -288,7 +288,7 @@ export default function ProfilePage() {
                 {/* Profile Info */}
                 <div className="flex-1 space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                    <h1 className="text-3xl font-bold text-foreground">
+                    <h1 className="text-3xl font-bold text-white">
                       {profile.full_name || "User"}
                     </h1>
                     <Badge className={`${getRoleBadgeColor(profile.role)} w-fit`}>
@@ -296,7 +296,7 @@ export default function ProfilePage() {
                     </Badge>
                   </div>
                   
-                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap gap-4 text-sm text-white/60">
                     {profile.email && (
                       <div className="flex items-center gap-2">
                         <Mail className="h-4 w-4" />
@@ -318,18 +318,18 @@ export default function ProfilePage() {
                   </div>
 
                   {profile.bio && (
-                    <p className="text-muted-foreground mt-2">{profile.bio}</p>
+                    <p className="text-white/60 mt-2">{profile.bio}</p>
                   )}
 
                   {/* Profile Completion */}
                   <div className="mt-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-foreground">Profile Completion</span>
-                      <span className="text-sm font-semibold text-primary">{profileCompletion}%</span>
+                      <span className="text-sm font-medium text-white">Profile Completion</span>
+                      <span className="text-sm font-semibold text-violet-400">{profileCompletion}%</span>
                     </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-primary transition-all duration-500"
+                        className="h-full bg-violet-500 transition-all duration-500"
                         style={{ width: `${profileCompletion}%` }}
                       />
                     </div>
@@ -339,7 +339,7 @@ export default function ProfilePage() {
                 {/* Edit Button */}
                 <button
                   onClick={() => setIsEditing(!isEditing)}
-                  className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all flex items-center gap-2"
+                  className="px-4 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2"
                 >
                   {isEditing ? (
                     <>
@@ -363,27 +363,13 @@ export default function ProfilePage() {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">
+                    <p className="text-sm font-medium text-white/60">
                       {userRole === "student" ? "Applications" : "Total Internships"}
                     </p>
-                    <p className="text-3xl font-bold text-foreground mt-2">{stats.applications}</p>
+                    <p className="text-3xl font-bold text-white mt-2">{stats.applications}</p>
                   </div>
-                  <div className="h-12 w-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                    <Briefcase className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-muted-foreground">Active</p>
-                    <p className="text-3xl font-bold text-foreground mt-2">{stats.activeInternships}</p>
-                  </div>
-                  <div className="h-12 w-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
+                  <div className="h-12 w-12 bg-violet-500/15 rounded-full flex items-center justify-center">
+                    <Briefcase className="h-6 w-6 text-violet-400" />
                   </div>
                 </div>
               </CardContent>
@@ -393,11 +379,25 @@ export default function ProfilePage() {
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-muted-foreground">Completed</p>
-                    <p className="text-3xl font-bold text-foreground mt-2">{stats.completedInternships}</p>
+                    <p className="text-sm font-medium text-white/60">Active</p>
+                    <p className="text-3xl font-bold text-white mt-2">{stats.activeInternships}</p>
                   </div>
-                  <div className="h-12 w-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
-                    <CheckCircle2 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                  <div className="h-12 w-12 bg-emerald-500/15 rounded-full flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-emerald-400" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-white/60">Completed</p>
+                    <p className="text-3xl font-bold text-white mt-2">{stats.completedInternships}</p>
+                  </div>
+                  <div className="h-12 w-12 bg-fuchsia-500/15 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="h-6 w-6 text-fuchsia-400 " />
                   </div>
                 </div>
               </CardContent>
@@ -408,11 +408,11 @@ export default function ProfilePage() {
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">Certificates</p>
-                      <p className="text-3xl font-bold text-foreground mt-2">{stats.certificates}</p>
+                      <p className="text-sm font-medium text-white/60">Certificates</p>
+                      <p className="text-3xl font-bold text-white mt-2">{stats.certificates}</p>
                     </div>
-                    <div className="h-12 w-12 bg-amber-100 dark:bg-amber-900/20 rounded-full flex items-center justify-center">
-                      <Award className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                    <div className="h-12 w-12 bg-amber-500/15 rounded-full flex items-center justify-center">
+                      <Award className="h-6 w-6 text-amber-600" />
                     </div>
                   </div>
                 </CardContent>
@@ -442,18 +442,18 @@ export default function ProfilePage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1">Full Name</p>
-                      <p className="text-foreground">{profile.full_name || "Not provided"}</p>
+                      <p className="text-sm font-medium text-white/60 mb-1">Full Name</p>
+                      <p className="text-white">{profile.full_name || "Not provided"}</p>
                     </div>
                     <Separator />
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1">Bio</p>
-                      <p className="text-foreground">{profile.bio || "No bio added yet"}</p>
+                      <p className="text-sm font-medium text-white/60 mb-1">Bio</p>
+                      <p className="text-white">{profile.bio || "No bio added yet"}</p>
                     </div>
                     <Separator />
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground mb-1">Member Since</p>
-                      <div className="flex items-center gap-2 text-foreground">
+                      <p className="text-sm font-medium text-white/60 mb-1">Member Since</p>
+                      <div className="flex items-center gap-2 text-white">
                         <Calendar className="h-4 w-4" />
                         {new Date(profile.created_at).toLocaleDateString('en-US', { 
                           year: 'numeric', 
@@ -477,10 +477,10 @@ export default function ProfilePage() {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
-                        <div className="h-2 w-2 bg-primary rounded-full mt-2"></div>
+                        <div className="h-2 w-2 bg-violet-500 rounded-full mt-2"></div>
                         <div>
-                          <p className="text-sm font-medium text-foreground">Profile Updated</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-sm font-medium text-white">Profile Updated</p>
+                          <p className="text-xs text-white/60">
                             {new Date(profile.updated_at).toLocaleDateString()}
                           </p>
                         </div>
@@ -488,8 +488,8 @@ export default function ProfilePage() {
                       <div className="flex items-start gap-3">
                         <div className="h-2 w-2 bg-muted rounded-full mt-2"></div>
                         <div>
-                          <p className="text-sm font-medium text-foreground">Account Created</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-sm font-medium text-white">Account Created</p>
+                          <p className="text-xs text-white/60">
                             {new Date(profile.created_at).toLocaleDateString()}
                           </p>
                         </div>
@@ -520,7 +520,7 @@ export default function ProfilePage() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-center py-8">
+                    <p className="text-white/60 text-center py-8">
                       No skills added yet. Add your skills to showcase your expertise!
                     </p>
                   )}
@@ -543,7 +543,7 @@ export default function ProfilePage() {
                     <CardContent className="space-y-6">
                       {/* Full Name */}
                       <div className="space-y-2">
-                        <label htmlFor="full_name" className="block text-sm font-medium text-foreground">
+                        <label htmlFor="full_name" className="block text-sm font-medium text-white">
                           Full Name
                         </label>
                         <input
@@ -552,14 +552,14 @@ export default function ProfilePage() {
                           name="full_name"
                           value={formData.full_name}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full px-4 py-2 border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                           placeholder="Enter your full name"
                         />
                       </div>
 
                       {/* Bio */}
                       <div className="space-y-2">
-                        <label htmlFor="bio" className="block text-sm font-medium text-foreground">
+                        <label htmlFor="bio" className="block text-sm font-medium text-white">
                           Bio
                         </label>
                         <textarea
@@ -568,17 +568,17 @@ export default function ProfilePage() {
                           value={formData.bio}
                           onChange={handleInputChange}
                           rows={4}
-                          className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                          className="w-full px-4 py-2 border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
                           placeholder="Tell us about yourself..."
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white/60">
                           {formData.bio.length}/500 characters
                         </p>
                       </div>
 
                       {/* Location */}
                       <div className="space-y-2">
-                        <label htmlFor="location" className="block text-sm font-medium text-foreground">
+                        <label htmlFor="location" className="block text-sm font-medium text-white">
                           Location
                         </label>
                         <input
@@ -587,14 +587,14 @@ export default function ProfilePage() {
                           name="location"
                           value={formData.location}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full px-4 py-2 border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                           placeholder="City, Country"
                         />
                       </div>
 
                       {/* Phone Number */}
                       <div className="space-y-2">
-                        <label htmlFor="phone_number" className="block text-sm font-medium text-foreground">
+                        <label htmlFor="phone_number" className="block text-sm font-medium text-white">
                           Phone Number
                         </label>
                         <input
@@ -603,14 +603,14 @@ export default function ProfilePage() {
                           name="phone_number"
                           value={formData.phone_number}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full px-4 py-2 border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                           placeholder="+1 (555) 000-0000"
                         />
                       </div>
 
                       {/* Skills */}
                       <div className="space-y-2">
-                        <label htmlFor="skills" className="block text-sm font-medium text-foreground">
+                        <label htmlFor="skills" className="block text-sm font-medium text-white">
                           Skills (comma-separated)
                         </label>
                         <input
@@ -619,9 +619,9 @@ export default function ProfilePage() {
                           value={formData.skills.join(", ")}
                           onChange={handleSkillsChange}
                           placeholder="e.g., JavaScript, React, Node.js, Python"
-                          className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-full px-4 py-2 border border-white/8 rounded-lg bg-[#05040f] text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                         />
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-white/60">
                           Separate each skill with a comma
                         </p>
                       </div>
@@ -631,7 +631,7 @@ export default function ProfilePage() {
                         <button
                           type="submit"
                           disabled={isSaving}
-                          className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-6 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {isSaving ? (
                             <>
@@ -657,7 +657,7 @@ export default function ProfilePage() {
                               phone_number: profile.phone_number || "",
                             })
                           }}
-                          className="px-6 py-2 border border-border rounded-lg hover:bg-secondary transition-colors"
+                          className="px-6 py-2 border border-white/8 rounded-lg hover:bg-white/5 transition-colors"
                         >
                           Cancel
                         </button>
@@ -673,13 +673,13 @@ export default function ProfilePage() {
                   </CardHeader>
                   <CardContent>
                     <div className="text-center py-12">
-                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                        <Edit2 className="h-8 w-8 text-primary" />
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-500/10 mb-4">
+                        <Edit2 className="h-8 w-8 text-violet-400" />
                       </div>
-                      <p className="text-muted-foreground mb-4">Click "Edit Profile" to update your information</p>
+                      <p className="text-white/60 mb-4">Click "Edit Profile" to update your information</p>
                       <button
                         onClick={() => setIsEditing(true)}
-                        className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all"
+                        className="px-6 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-all"
                       >
                         Edit Profile
                       </button>

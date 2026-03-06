@@ -100,24 +100,24 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#05040f] flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
-        <div className="bg-card rounded-lg shadow-lg border border-border p-8">
+        <div className="bg-white/5 rounded-lg shadow-lg border border-white/8 p-8">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Complete Your Profile</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold text-white mb-2">Complete Your Profile</h1>
+            <p className="text-white/60">
               Let's get to know you better to match you with the best opportunities
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-3">What is your role?</label>
+              <label className="block text-sm font-medium text-white mb-3">What is your role?</label>
               <div className="space-y-2">
                 {(["student", "mentor", "admin"] as const).map((role) => (
                   <label
                     key={role}
-                    className="flex items-center p-3 border border-border rounded-lg cursor-pointer hover:bg-accent transition-colors"
+                    className="flex items-center p-3 border border-white/8 rounded-lg cursor-pointer hover:bg-violet-500/15 transition-colors"
                     onClick={() => setSelectedRole(role)}
                   >
                     <input
@@ -126,9 +126,9 @@ export default function OnboardingPage() {
                       value={role}
                       checked={selectedRole === role}
                       onChange={(e) => setSelectedRole(e.target.value as "student" | "mentor" | "admin")}
-                      className="w-4 h-4 text-primary"
+                      className="w-4 h-4 text-violet-400"
                     />
-                    <span className="ml-3 text-foreground capitalize font-medium">{role}</span>
+                    <span className="ml-3 text-white capitalize font-medium">{role}</span>
                   </label>
                 ))}
               </div>
@@ -136,7 +136,7 @@ export default function OnboardingPage() {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-white mb-2">
                   Full Name
                 </label>
                 <input
@@ -146,12 +146,12 @@ export default function OnboardingPage() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                 />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
                   Phone Number
                 </label>
                 <input
@@ -160,13 +160,13 @@ export default function OnboardingPage() {
                   placeholder="+1 (555) 000-0000"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="location" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="location" className="block text-sm font-medium text-white mb-2">
                 Location
               </label>
               <input
@@ -175,12 +175,12 @@ export default function OnboardingPage() {
                 placeholder="City, Country"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60"
               />
             </div>
 
             <div>
-              <label htmlFor="skills" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="skills" className="block text-sm font-medium text-white mb-2">
                 Skills
               </label>
               <input
@@ -189,12 +189,12 @@ export default function OnboardingPage() {
                 placeholder="Enter skills separated by commas (e.g., React, TypeScript, Python)"
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
-                className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60"
               />
             </div>
 
             <div>
-              <label htmlFor="bio" className="block text-sm font-medium text-foreground mb-2">
+              <label htmlFor="bio" className="block text-sm font-medium text-white mb-2">
                 Bio
               </label>
               <textarea
@@ -203,12 +203,12 @@ export default function OnboardingPage() {
                 rows={4}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-                className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/60 resize-none"
               />
             </div>
 
             {error && (
-              <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
                 {error}
               </div>
             )}
@@ -216,7 +216,7 @@ export default function OnboardingPage() {
             <button
               type="submit"
               disabled={isLoading || !fullName || !selectedRole}
-              className="w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
+              className="w-full py-2 px-4 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg font-medium hover:opacity-90 disabled:opacity-50 transition-colors"
             >
               {isLoading ? "Completing Profile..." : "Complete Profile"}
             </button>

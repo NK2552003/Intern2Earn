@@ -82,12 +82,12 @@ export default function BlogsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#05040f]">
       {/* Hero */}
       <section className="relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <motion.div
-            className="absolute top-10 -left-20 w-40 h-40 sm:w-72 sm:h-72 bg-primary/10 rounded-full blur-3xl"
+            className="absolute top-10 -left-20 w-40 h-40 sm:w-72 sm:h-72 bg-violet-500/10 rounded-full blur-3xl"
             animate={{ y: [0, 30, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
@@ -95,22 +95,22 @@ export default function BlogsPage() {
 
         <div className="max-w-4xl mx-auto text-center">
           <motion.div variants={itemVariants} initial="hidden" animate="visible">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
               Our <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">Blog</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8">
-              Insights, tips, and stories from the Inter2Earn community.
+            <p className="text-base sm:text-lg text-white/60 mb-8">
+              Insights, tips, and stories from the Upskillify community.
             </p>
 
             {/* Search */}
             <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-4 top-3.5 w-5 h-5 text-muted-foreground" />
+              <Search className="absolute left-4 top-3.5 w-5 h-5 text-white/60" />
               <input
                 type="text"
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:border-primary"
+                className="w-full pl-12 pr-4 py-3 rounded-lg border border-white/8 bg-[#05040f] focus:outline-none focus:border-violet-500"
               />
             </div>
           </motion.div>
@@ -133,21 +133,21 @@ export default function BlogsPage() {
                   key={blog.id}
                   variants={itemVariants}
                   whileHover={{ y: -5 }}
-                  className="rounded-xl border border-border bg-card overflow-hidden hover:border-primary/30 transition-all group cursor-pointer"
+                  className="rounded-xl border border-white/8 bg-white/5 overflow-hidden hover:border-violet-400/30 transition-all group cursor-pointer"
                 >
                   <div className="p-6 sm:p-8">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                      <blog.icon className="w-6 h-6 text-primary" />
+                    <div className="w-12 h-12 rounded-lg bg-violet-500/10 flex items-center justify-center mb-4">
+                      <blog.icon className="w-6 h-6 text-violet-400" />
                     </div>
-                    <div className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-4">
-                      <p className="text-xs font-medium text-primary">{blog.category}</p>
+                    <div className="inline-block px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 mb-4">
+                      <p className="text-xs font-medium text-violet-400">{blog.category}</p>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-violet-400 transition-colors">
                       {blog.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-4">{blog.excerpt}</p>
+                    <p className="text-sm text-white/60 mb-4">{blog.excerpt}</p>
 
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground pt-4 border-t border-border">
+                    <div className="flex items-center gap-4 text-xs text-white/60 pt-4 border-t border-white/8">
                       <div className="flex items-center gap-1">
                         <Calendar size={14} />
                         {blog.date}
@@ -159,7 +159,7 @@ export default function BlogsPage() {
                     </div>
 
                     <motion.div whileHover={{ x: 4 }} className="mt-4">
-                      <button className="flex items-center gap-2 text-primary hover:gap-3 transition-all text-sm font-medium">
+                      <button className="flex items-center gap-2 text-violet-400 hover:gap-3 transition-all text-sm font-medium">
                         Read More
                         <ArrowRight size={14} />
                       </button>
@@ -169,7 +169,7 @@ export default function BlogsPage() {
               ))
             ) : (
               <div className="col-span-full text-center py-12">
-                <p className="text-muted-foreground">No articles found matching your search.</p>
+                <p className="text-white/60">No articles found matching your search.</p>
               </div>
             )}
           </motion.div>

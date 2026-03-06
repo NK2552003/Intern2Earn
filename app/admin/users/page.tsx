@@ -111,13 +111,13 @@ export default function UsersPage() {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "student":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+        return "bg-violet-500/15 text-violet-300 "
       case "mentor":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+        return "bg-emerald-500/15 text-emerald-300 "
       case "admin":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+        return "bg-fuchsia-500/15 text-fuchsia-300 "
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+        return "bg-white/8 text-white/60 dark:bg-gray-700 dark:text-gray-200"
     }
   }
 
@@ -126,19 +126,19 @@ export default function UsersPage() {
       label: "Total Users",
       value: users.length,
       icon: <Users className="w-5 h-5" />,
-      color: "bg-blue-500",
+      color: "bg-violet-500/10",
     },
     {
       label: "Students",
       value: users.filter((u) => u.role === "student").length,
       icon: <UserCheck className="w-5 h-5" />,
-      color: "bg-green-500",
+      color: "bg-emerald-500/10",
     },
     {
       label: "Mentors",
       value: users.filter((u) => u.role === "mentor").length,
       icon: <UserCog className="w-5 h-5" />,
-      color: "bg-purple-500",
+      color: "bg-fuchsia-500/10",
     },
     {
       label: "Admins",
@@ -150,24 +150,24 @@ export default function UsersPage() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex h-screen bg-[#05040f]">
         <Sidebar role="admin" />
         <div className="flex-1 flex items-center justify-center">
-          <div className="text-muted-foreground">Loading...</div>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-violet-500 border-t-transparent"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <div className="flex h-screen bg-[#05040f]">
       <Sidebar role="admin" />
       <main className="flex-1 overflow-auto">
         <div className="p-6">
             {/* Header */}
             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-              <h1 className="text-4xl font-bold text-foreground">User Management</h1>
-              <p className="text-muted-foreground mt-2">Manage all platform users, students, mentors, and admins</p>
+              <h1 className="text-4xl font-bold text-white">User Management</h1>
+              <p className="text-white/60 mt-2">Manage all platform users, students, mentors, and admins</p>
             </motion.div>
 
             {/* Stats Cards */}
@@ -184,12 +184,12 @@ export default function UsersPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   whileHover={{ y: -4 }}
-                  className="bg-card border border-border rounded-lg p-4 hover:shadow-lg transition-shadow"
+                  className="bg-white/5 border border-white/8 rounded-lg p-4 hover:shadow-lg transition-shadow"
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-muted-foreground text-xs font-medium uppercase">{stat.label}</p>
-                      <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
+                      <p className="text-white/60 text-xs font-medium uppercase">{stat.label}</p>
+                      <p className="text-2xl font-bold text-white mt-1">{stat.value}</p>
                     </div>
                     <div className={`${stat.color} p-2 rounded-lg text-white`}>{stat.icon}</div>
                   </div>
@@ -202,32 +202,32 @@ export default function UsersPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="bg-card border border-border rounded-lg p-6 mb-8"
+              className="bg-white/5 border border-white/8 rounded-lg p-6 mb-8"
             >
               <div className="flex items-center gap-2 mb-4">
-                <Filter className="w-5 h-5 text-primary" />
-                <h2 className="font-semibold text-foreground">Filters</h2>
+                <Filter className="w-5 h-5 text-violet-400" />
+                <h2 className="font-semibold text-white">Filters</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Search Users</label>
+                  <label className="block text-sm font-medium text-white mb-2">Search Users</label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60" />
                     <input
                       type="text"
                       placeholder="Search by email or name..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full pl-10 pr-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Filter by Role</label>
+                  <label className="block text-sm font-medium text-white mb-2">Filter by Role</label>
                   <select
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    className="w-full px-4 py-2 bg-input border border-border rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 bg-white/6 border border-white/8 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-violet-500/60"
                   >
                     <option value="all">All Roles</option>
                     <option value="student">Students</option>
@@ -240,17 +240,17 @@ export default function UsersPage() {
 
             {/* Users Table */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-              <div className="bg-card border border-border rounded-lg overflow-hidden">
+              <div className="bg-white/5 border border-white/8 rounded-lg overflow-hidden">
                 {filteredUsers.length > 0 ? (
                   <div className="overflow-x-auto">
                     <table className="w-full">
-                      <thead className="border-b border-border bg-secondary">
+                      <thead className="border-b border-white/8 bg-white/5">
                         <tr>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Name</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Email</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Role</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Joined</th>
-                          <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Actions</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Name</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Email</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Role</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Joined</th>
+                          <th className="px-6 py-4 text-left text-sm font-semibold text-white">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -260,18 +260,18 @@ export default function UsersPage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="border-b border-border hover:bg-secondary transition-colors"
+                            className="border-b border-white/8 hover:bg-white/5 transition-colors"
                           >
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold">
+                                <div className="w-8 h-8 rounded-full bg-linear-to-r from-violet-500 to-fuchsia-500 text-white flex items-center justify-center text-xs font-bold">
                                   {u.full_name?.charAt(0).toUpperCase() || "U"}
                                 </div>
-                                <span className="text-sm font-medium text-foreground">{u.full_name || "N/A"}</span>
+                                <span className="text-sm font-medium text-white">{u.full_name || "N/A"}</span>
                               </div>
                             </td>
                             <td className="px-6 py-4">
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-2 text-sm text-white/60">
                                 <Mail className="w-4 h-4" />
                                 {u.email}
                               </div>
@@ -286,15 +286,15 @@ export default function UsersPage() {
                                 {u.role}
                               </span>
                             </td>
-                            <td className="px-6 py-4 text-sm text-muted-foreground">
+                            <td className="px-6 py-4 text-sm text-white/60">
                               <div className="flex items-center gap-2">
                                 <Calendar className="w-4 h-4" />
                                 {new Date(u.created_at).toLocaleDateString()}
                               </div>
                             </td>
                             <td className="px-6 py-4">
-                              <button className="p-2 hover:bg-secondary rounded-lg transition-colors">
-                                <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
+                              <button className="p-2 hover:bg-white/5 rounded-lg transition-colors">
+                                <MoreHorizontal className="w-4 h-4 text-white/60" />
                               </button>
                             </td>
                           </motion.tr>
@@ -304,8 +304,8 @@ export default function UsersPage() {
                   </div>
                 ) : (
                   <div className="p-12 text-center">
-                    <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-                    <p className="text-muted-foreground">No users found matching your filters</p>
+                    <Users className="w-12 h-12 text-white/60 mx-auto mb-4 opacity-50" />
+                    <p className="text-white/60">No users found matching your filters</p>
                   </div>
                 )}
               </div>
@@ -317,7 +317,7 @@ export default function UsersPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-sm text-muted-foreground mt-4"
+                className="text-sm text-white/60 mt-4"
               >
                 Showing {filteredUsers.length} of {users.length} users
               </motion.p>

@@ -16,8 +16,8 @@ export default function HelpCenterPage() {
     },
     {
       id: 2,
-      question: "What is the cost of using Inter2Earn?",
-      answer: "Inter2Earn is completely free for students. Mentors can also use our platform free of charge.",
+      question: "What is the cost of using Upskillify?",
+      answer: "Upskillify is completely free for students. Mentors can also use our platform free of charge.",
     },
     {
       id: 3,
@@ -37,12 +37,12 @@ export default function HelpCenterPage() {
     {
       id: 6,
       question: "How do I report an issue?",
-      answer: "Use our contact form or email support@inter2earn.com with details about your issue. Our team will respond within 24 hours.",
+      answer: "Use our contact form or email support@upskillify.com with details about your issue. Our team will respond within 24 hours.",
     },
   ]
 
   const support = [
-    { icon: MessageSquare, title: "Email Support", desc: "support@inter2earn.com", action: "Send Email" },
+    { icon: MessageSquare, title: "Email Support", desc: "support@upskillify.com", action: "Send Email" },
     { icon: Phone, title: "Live Chat", desc: "Chat with our team in real-time", action: "Start Chat" },
   ]
 
@@ -57,12 +57,12 @@ export default function HelpCenterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#05040f]">
       {/* Hero */}
       <section className="relative overflow-hidden py-12 sm:py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 -z-10 overflow-hidden">
           <motion.div
-            className="absolute top-10 -left-20 w-40 h-40 sm:w-72 sm:h-72 bg-primary/10 rounded-full blur-3xl"
+            className="absolute top-10 -left-20 w-40 h-40 sm:w-72 sm:h-72 bg-violet-500/10 rounded-full blur-3xl"
             animate={{ y: [0, 30, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
@@ -70,10 +70,10 @@ export default function HelpCenterPage() {
 
         <div className="max-w-4xl mx-auto text-center">
           <motion.div variants={itemVariants} initial="hidden" animate="visible">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
               Help <span className="bg-linear-to-r from-primary to-accent bg-clip-text text-transparent">Center</span>
             </h1>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8">
+            <p className="text-base sm:text-lg text-white/60 mb-8">
               Find answers to common questions and get support.
             </p>
           </motion.div>
@@ -81,7 +81,7 @@ export default function HelpCenterPage() {
       </section>
 
       {/* Support Options */}
-      <section className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-card border-y border-border">
+      <section className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-white/5 border-y border-white/8">
         <div className="max-w-5xl mx-auto">
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8"
@@ -95,12 +95,12 @@ export default function HelpCenterPage() {
                 key={idx}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
-                className="p-6 sm:p-8 rounded-xl border border-border bg-background hover:border-primary/30 transition-all text-center"
+                className="p-6 sm:p-8 rounded-xl border border-white/8 bg-[#05040f] hover:border-violet-400/30 transition-all text-center"
               >
-                <item.icon className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground mb-6">{item.desc}</p>
-                <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-all text-sm font-medium">
+                <item.icon className="w-12 h-12 text-violet-400 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-white/60 mb-6">{item.desc}</p>
+                <button className="px-6 py-2 bg-linear-to-r from-violet-500 to-fuchsia-500 text-white rounded-lg hover:opacity-90 transition-all text-sm font-medium">
                   {item.action}
                 </button>
               </motion.div>
@@ -119,8 +119,8 @@ export default function HelpCenterPage() {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <HelpCircle className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>
+            <HelpCircle className="w-12 h-12 text-violet-400 mx-auto mb-4" />
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Frequently Asked Questions</h2>
           </motion.div>
 
           <motion.div
@@ -134,18 +134,18 @@ export default function HelpCenterPage() {
               <motion.div
                 key={faq.id}
                 variants={itemVariants}
-                className="border border-border rounded-lg overflow-hidden"
+                className="border border-white/8 rounded-lg overflow-hidden"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
-                  className="w-full p-6 flex items-center justify-between hover:bg-card transition-colors text-left"
+                  className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors text-left"
                 >
-                  <h3 className="text-lg font-semibold text-foreground">{faq.question}</h3>
+                  <h3 className="text-lg font-semibold text-white">{faq.question}</h3>
                   <motion.div
                     animate={{ rotate: openFaq === faq.id ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ChevronDown size={20} className="text-primary" />
+                    <ChevronDown size={20} className="text-violet-400" />
                   </motion.div>
                 </button>
                 <motion.div
@@ -157,7 +157,7 @@ export default function HelpCenterPage() {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="p-6 pt-0 text-muted-foreground border-t border-border bg-card">{faq.answer}</div>
+                  <div className="p-6 pt-0 text-white/60 border-t border-white/8 bg-white/5">{faq.answer}</div>
                 </motion.div>
               </motion.div>
             ))}
@@ -166,15 +166,15 @@ export default function HelpCenterPage() {
       </section>
 
       {/* Still Need Help */}
-      <section className="bg-linear-to-r from-primary/10 to-accent/10 border-t border-border py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="bg-linear-to-r from-primary/10 to-accent/10 border-t border-white/8 py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div variants={itemVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Still need help?</h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-8">Our support team is ready to assist you.</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">Still need help?</h2>
+            <p className="text-base sm:text-lg text-white/60 mb-8">Our support team is ready to assist you.</p>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/contact"
-                className="px-6 sm:px-10 py-3 sm:py-4 bg-linear-to-r from-primary to-primary/90 text-primary-foreground rounded-xl font-semibold hover:shadow-lg transition-all inline-block"
+                className="px-6 sm:px-10 py-3 sm:py-4 bg-linear-to-r from-primary to-primary/90 text-white rounded-xl font-semibold hover:shadow-lg transition-all inline-block"
               >
                 Contact Support
               </Link>

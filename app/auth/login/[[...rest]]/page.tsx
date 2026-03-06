@@ -4,19 +4,19 @@ import { SignIn } from "@clerk/nextjs"
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#05040f] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <SignIn
           appearance={{
             elements: {
               rootBox: "w-full",
-              card: "bg-card rounded-lg shadow-lg border border-border p-8",
-              headerTitle: "text-3xl font-bold text-foreground mb-2",
-              headerSubtitle: "text-muted-foreground",
-              socialButtonsBlockButton: "bg-input border border-border text-foreground hover:bg-accent",
-              formButtonPrimary: "bg-primary text-primary-foreground hover:opacity-90",
-              formFieldInput: "bg-input border border-border text-foreground",
-              footerActionLink: "text-primary hover:underline",
+              card: "bg-white/5 rounded-2xl shadow-2xl border border-white/8 p-8",
+              headerTitle: "text-3xl font-bold text-white mb-2",
+              headerSubtitle: "text-white/60",
+              socialButtonsBlockButton: "bg-white/6 border border-white/8 text-white hover:bg-white/10",
+              formButtonPrimary: "bg-violet-500 text-white hover:bg-violet-600",
+              formFieldInput: "bg-white/6 border border-white/8 text-white",
+              footerActionLink: "text-violet-400 hover:underline",
             },
           }}
           redirectUrl="/onboarding"
