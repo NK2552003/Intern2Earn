@@ -163,7 +163,7 @@ export default function InternshipDetailPage() {
                     {internship.salary_min && (
                       <div>
                         <p className="text-white/60 text-sm">Salary</p>
-                        <p className="text-white font-medium text-violet-400">
+                        <p className="text-violet-400 font-medium">
                           ${internship.salary_min.toLocaleString()} - ${internship.salary_max?.toLocaleString()}
                         </p>
                       </div>

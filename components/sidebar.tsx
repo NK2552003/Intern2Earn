@@ -22,9 +22,14 @@ import {
   CheckCircle,
   BookOpen,
   BarChart3,
-  ChevronRight,
+  ChevronLeft,
   Plus,
-  MoreHorizontal,
+  Bell,
+  GraduationCap,
+  Shield,
+  TrendingUp,
+  Zap,
+  Star,
 } from "lucide-react"
 
 interface SidebarProps {
@@ -35,33 +40,85 @@ interface NavItem {
   href: string
   label: string
   icon: React.ReactNode
-  category?: string
+  badge?: string | number
 }
+
+interface NavGroup {
+  id: string
+  label: string
+  items: NavItem[]
+}
+
+// Role-specific theming
+const ROLE_CONFIG = {
+  student: {
+    accent: "violet",
+    label: "Student",
+    icon: <GraduationCap size={14} />,
+    badge: "bg-violet-500/20 text-violet-300 border-violet-500/30",
+    activeBg: "bg-violet-500/10",
+    activeBorder: "border-l-violet-500",
+    activeText: "text-violet-300",
+    activeIcon: "text-violet-400",
+    activeShadow: "shadow-violet-500/10",
+    hoverBg: "hover:bg-violet-500/5",
+    cta: "bg-linear-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500",
+    ctaLabel: "New Application",
+    ctaHref: "/internships",
+    glow: "bg-violet-500/5",
+    ring: "ring-violet-500/40",
+  },
+  mentor: {
+    accent: "emerald",
+    label: "Mentor",
+    icon: <Star size={14} />,
+    badge: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+    activeBg: "bg-emerald-500/10",
+    activeBorder: "border-l-emerald-500",
+    activeText: "text-emerald-300",
+    activeIcon: "text-emerald-400",
+    activeShadow: "shadow-emerald-500/10",
+    hoverBg: "hover:bg-emerald-500/5",
+    cta: "bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500",
+    ctaLabel: "Post Internship",
+    ctaHref: "/internships/manage",
+    glow: "bg-emerald-500/5",
+    ring: "ring-emerald-500/40",
+  },
+  admin: {
+    accent: "fuchsia",
+    label: "Admin",
+    icon: <Shield size={14} />,
+    badge: "bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/30",
+    activeBg: "bg-fuchsia-500/10",
+    activeBorder: "border-l-fuchsia-500",
+    activeText: "text-fuchsia-300",
+    activeIcon: "text-fuchsia-400",
+    activeShadow: "shadow-fuchsia-500/10",
+    hoverBg: "hover:bg-fuchsia-500/5",
+    cta: "bg-linear-to-r from-fuchsia-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500",
+    ctaLabel: "View Reports",
+    ctaHref: "/admin/reports",
+    glow: "bg-fuchsia-500/5",
+    ring: "ring-fuchsia-500/40",
+  },
+} as const
 
 export default function Sidebar({ role }: SidebarProps) {
   const pathname = usePathname()
   const { user: clerkUser } = useUser()
   const { signOut } = useClerk()
-  const [isExpanded, setIsExpanded] = useState(true)
-  const [isManuallyExpanded, setIsManuallyExpanded] = useState(false)
-  const [isHovering, setIsHovering] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [userProfile, setUserProfile] = useState<any>(null)
-  const [isMobile, setIsMobile] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const config = ROLE_CONFIG[role]
 
   useEffect(() => {
     const checkMobile = () => {
-      const isMobileView = window.innerWidth < 768
-      setIsMobile(isMobileView)
-      if (isMobileView) {
-        setIsExpanded(false)
-        setIsManuallyExpanded(false)
-      } else {
-        setIsExpanded(true)
-        setIsManuallyExpanded(false)
+      if (window.innerWidth < 768) {
+        setIsMobileOpen(false)
       }
     }
-    checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
@@ -80,311 +137,338 @@ export default function Sidebar({ role }: SidebarProps) {
     getProfile()
   }, [clerkUser])
 
-  const getNavItems = (): NavItem[] => {
+  const getNavGroups = (): NavGroup[] => {
     switch (role) {
       case "student":
         return [
-          { href: "/dashboard/student", label: "Dashboard", icon: <LayoutDashboard size={20} />, category: "main" },
-          { href: "/internships", label: "Browse Internships", icon: <Briefcase size={20} />, category: "explore" },
-          { href: "/applications", label: "My Applications", icon: <FileText size={20} />, category: "explore" },
-          { href: "/submissions", label: "Submissions", icon: <CheckCircle size={20} />, category: "work" },
-          { href: "/progress", label: "Track Progress", icon: <Clock size={20} />, category: "work" },
-          { href: "/certificates", label: "Certificates", icon: <Award size={20} />, category: "achievements" },
-          { href: "/profile", label: "Profile", icon: <User size={20} />, category: "account" },
+          {
+            id: "main",
+            label: "Overview",
+            items: [
+              { href: "/dashboard/student", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+            ],
+          },
+          {
+            id: "explore",
+            label: "Explore",
+            items: [
+              { href: "/internships", label: "Browse Internships", icon: <Briefcase size={18} /> },
+              { href: "/applications", label: "My Applications", icon: <FileText size={18} /> },
+            ],
+          },
+          {
+            id: "work",
+            label: "Work",
+            items: [
+              { href: "/submissions", label: "Submissions", icon: <CheckCircle size={18} /> },
+              { href: "/progress", label: "Track Progress", icon: <TrendingUp size={18} /> },
+            ],
+          },
+          {
+            id: "achievements",
+            label: "Achievements",
+            items: [
+              { href: "/certificates", label: "Certificates", icon: <Award size={18} /> },
+            ],
+          },
+          {
+            id: "account",
+            label: "Account",
+            items: [
+              { href: "/profile", label: "My Profile", icon: <User size={18} /> },
+            ],
+          },
         ]
       case "mentor":
         return [
-          { href: "/dashboard/mentor", label: "Dashboard", icon: <LayoutDashboard size={20} />, category: "main" },
-          { href: "/internships/manage", label: "My Internships", icon: <Briefcase size={20} />, category: "manage" },
-          { href: "/applicants", label: "Applicants", icon: <Users size={20} />, category: "manage" },
-          { href: "/submissions/review", label: "Reviews", icon: <CheckCircle size={20} />, category: "manage" },
-          { href: "/progress", label: "Student Progress", icon: <Clock size={20} />, category: "manage" },
-          { href: "/students", label: "My Students", icon: <BookOpen size={20} />, category: "manage" },
-          { href: "/profile", label: "Profile", icon: <User size={20} />, category: "account" },
+          {
+            id: "main",
+            label: "Overview",
+            items: [
+              { href: "/dashboard/mentor", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+            ],
+          },
+          {
+            id: "manage",
+            label: "Manage",
+            items: [
+              { href: "/internships/manage", label: "My Internships", icon: <Briefcase size={18} /> },
+              { href: "/applicants", label: "Applicants", icon: <Users size={18} /> },
+              { href: "/submissions/review", label: "Reviews", icon: <CheckCircle size={18} /> },
+            ],
+          },
+          {
+            id: "students",
+            label: "Students",
+            items: [
+              { href: "/students", label: "My Students", icon: <BookOpen size={18} /> },
+              { href: "/progress", label: "Student Progress", icon: <TrendingUp size={18} /> },
+            ],
+          },
+          {
+            id: "account",
+            label: "Account",
+            items: [
+              { href: "/profile", label: "My Profile", icon: <User size={18} /> },
+            ],
+          },
         ]
       case "admin":
         return [
-          { href: "/dashboard/admin", label: "Dashboard", icon: <LayoutDashboard size={20} />, category: "main" },
-          { href: "/admin/users", label: "User Management", icon: <Users size={20} />, category: "manage" },
-          { href: "/admin/internships", label: "Internships", icon: <Briefcase size={20} />, category: "manage" },
-          { href: "/admin/applications", label: "Applications", icon: <FileText size={20} />, category: "manage" },
-          { href: "/admin/reports", label: "Reports & Analytics", icon: <BarChart3 size={20} />, category: "insights" },
-          { href: "/admin/settings", label: "Settings", icon: <Settings size={20} />, category: "account" },
+          {
+            id: "main",
+            label: "Overview",
+            items: [
+              { href: "/dashboard/admin", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+            ],
+          },
+          {
+            id: "platform",
+            label: "Platform",
+            items: [
+              { href: "/admin/users", label: "User Management", icon: <Users size={18} /> },
+              { href: "/admin/internships", label: "Internships", icon: <Briefcase size={18} /> },
+              { href: "/admin/applications", label: "Applications", icon: <FileText size={18} /> },
+            ],
+          },
+          {
+            id: "insights",
+            label: "Insights",
+            items: [
+              { href: "/admin/reports", label: "Reports & Analytics", icon: <BarChart3 size={18} /> },
+            ],
+          },
+          {
+            id: "system",
+            label: "System",
+            items: [
+              { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
+            ],
+          },
         ]
       default:
         return []
     }
   }
 
-  const navItems = getNavItems()
-  
-  // Group items by category
-  const groupedItems = navItems.reduce((acc, item) => {
-    const category = item.category || "other"
-    if (!acc[category]) {
-      acc[category] = []
-    }
-    acc[category].push(item)
-    return acc
-  }, {} as Record<string, NavItem[]>)
-
-  const categoryLabels: Record<string, string> = {
-    main: "Main",
-    explore: "Explore",
-    manage: "Manage",
-    work: "Work",
-    achievements: "Achievements",
-    insights: "Insights",
-    account: "Account",
-  }
-
-  const categoryOrder = ["main", "explore", "manage", "work", "achievements", "insights", "account"]
-
-  const handleToggleExpand = () => {
-    setIsManuallyExpanded(!isManuallyExpanded)
-    setIsExpanded(!isExpanded)
-  }
+  const navGroups = getNavGroups()
 
   const handleLogout = async () => {
     await signOut({ redirectUrl: "/" })
   }
 
-  // Determine sidebar state based on hover and manual expansion
-  const shouldShowExpanded = isMobile ? isExpanded : isManuallyExpanded || isHovering
-
-  const sidebarVariants = {
-    expanded: { width: "280px" },
-    collapsed: { width: "80px" },
+  const getInitials = (name?: string | null) => {
+    if (!name) return "U"
+    return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
   }
 
-  const textVariants = {
-    expanded: { opacity: 1, width: "auto", display: "block" },
-    collapsed: { opacity: 0, width: 0, display: "none" },
-  }
+  const SidebarContent = () => (
+    <div className="flex flex-col h-full">
+      {/* Header: Logo + Collapse */}
+      <div className={`flex items-center gap-3 px-4 py-5 border-b border-white/6 ${isCollapsed ? "justify-center" : "justify-between"}`}>
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2.5 group min-w-0">
+          <div className={`shrink-0 w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-lg shadow-violet-500/25 group-hover:shadow-violet-500/40 transition-shadow`}>
+            <Zap size={18} className="text-white" />
+          </div>
+          {!isCollapsed && (
+            <div className="min-w-0">
+              <p className="text-sm font-bold bg-linear-to-r from-violet-300 to-fuchsia-300 bg-clip-text text-transparent leading-tight">Upskillify</p>
+              <p className="text-[10px] text-white/30 leading-tight tracking-wide">Internship Platform</p>
+            </div>
+          )}
+        </Link>
+
+        {/* Collapse toggle - desktop only */}
+        {!isCollapsed && (
+          <button
+            onClick={() => setIsCollapsed(true)}
+            className="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-white/30 hover:text-white/70 hover:bg-white/6 transition-all shrink-0"
+            title="Collapse sidebar"
+          >
+            <ChevronLeft size={16} />
+          </button>
+        )}
+        {isCollapsed && (
+          <button
+            onClick={() => setIsCollapsed(false)}
+            className="hidden md:flex w-7 h-7 items-center justify-center rounded-lg text-white/30 hover:text-white/70 hover:bg-white/6 transition-all"
+            title="Expand sidebar"
+          >
+            <Menu size={16} />
+          </button>
+        )}
+      </div>
+
+      {/* CTA Quick Action */}
+      {!isCollapsed && (
+        <div className="px-3 pt-4 pb-2">
+          <Link
+            href={config.ctaHref}
+            className={`flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl text-white text-sm font-semibold shadow-lg transition-all duration-200 ${config.cta}`}
+          >
+            <Plus size={16} />
+            {config.ctaLabel}
+          </Link>
+        </div>
+      )}
+      {isCollapsed && (
+        <div className="px-3 pt-4 pb-2">
+          <Link
+            href={config.ctaHref}
+            className={`flex items-center justify-center w-9 h-9 mx-auto rounded-xl text-white shadow-lg transition-all duration-200 ${config.cta}`}
+            title={config.ctaLabel}
+          >
+            <Plus size={16} />
+          </Link>
+        </div>
+      )}
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-5 scrollbar-none">
+        {navGroups.map((group) => (
+          <div key={group.id}>
+            {/* Group label */}
+            {!isCollapsed && (
+              <p className="text-[10px] font-bold text-white/25 uppercase tracking-widest px-3 mb-1.5">
+                {group.label}
+              </p>
+            )}
+            {isCollapsed && <div className="h-px bg-white/6 mb-2 mx-1" />}
+
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    title={isCollapsed ? item.label : undefined}
+                    className={`
+                      relative flex items-center gap-3 rounded-xl transition-all duration-150
+                      ${isCollapsed ? "w-9 h-9 mx-auto justify-center" : "px-3 py-2.5"}
+                      ${isActive
+                        ? `${config.activeBg} ${config.activeText} border-l-2 ${config.activeBorder} shadow-sm ${config.activeShadow} pl-2.5`
+                        : `text-white/55 border-l-2 border-l-transparent hover:text-white/90 hover:bg-white/5 ${isCollapsed ? "" : "pl-2.5"}`
+                      }
+                    `}
+                  >
+                    <span className={`shrink-0 transition-colors ${isActive ? config.activeIcon : ""}`}>
+                      {item.icon}
+                    </span>
+                    {!isCollapsed && (
+                      <span className="text-sm font-medium leading-none flex-1">{item.label}</span>
+                    )}
+                    {!isCollapsed && item.badge && (
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full border ${isActive ? config.badge : "bg-white/8 text-white/50 border-white/10"}`}>
+                        {item.badge}
+                      </span>
+                    )}
+                    {!isCollapsed && isActive && (
+                      <span className={`w-1.5 h-1.5 rounded-full ${config.activeIcon.replace("text-", "bg-")} shrink-0`} />
+                    )}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      {/* Bottom: User Card */}
+      <div className="border-t border-white/6 p-3 space-y-1">
+        {/* User info */}
+        {clerkUser && (
+          <div className={`flex items-center gap-3 px-2 py-2.5 rounded-xl hover:bg-white/4 transition-colors group ${isCollapsed ? "justify-center" : ""}`}>
+            <div className="relative shrink-0">
+              {clerkUser.imageUrl ? (
+                <img
+                  src={clerkUser.imageUrl}
+                  alt={clerkUser.fullName || "User"}
+                  className={`rounded-full object-cover border-2 transition-all ${isCollapsed ? "w-8 h-8" : "w-9 h-9"} border-white/10 group-hover:ring-2 ${config.ring}`}
+                />
+              ) : (
+                <div className={`rounded-full bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold border border-violet-500/30 ${isCollapsed ? "w-8 h-8 text-xs" : "w-9 h-9 text-sm"}`}>
+                  {getInitials(clerkUser.fullName)}
+                </div>
+              )}
+              <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#05040f]" />
+            </div>
+            {!isCollapsed && (
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white truncate leading-tight">{clerkUser.fullName || "User"}</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className={`inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-full border ${config.badge}`}>
+                    {config.icon}
+                    {config.label}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Logout */}
+        <button
+          onClick={handleLogout}
+          className={`flex items-center gap-3 w-full px-3 py-2 rounded-xl text-white/40 hover:text-red-400 hover:bg-red-500/8 transition-all duration-150 group ${isCollapsed ? "justify-center" : ""}`}
+          title={isCollapsed ? "Sign out" : undefined}
+        >
+          <LogOut size={16} className="shrink-0 group-hover:translate-x-0.5 transition-transform" />
+          {!isCollapsed && <span className="text-sm font-medium">Sign out</span>}
+        </button>
+      </div>
+    </div>
+  )
 
   return (
     <>
-      {/* Mobile Toggle Button */}
+      {/* Mobile Toggle */}
       <div className="md:hidden fixed top-4 left-4 z-50">
         <motion.button
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="p-2 rounded-xl bg-linear-to-br from-violet-500 to-fuchsia-500 text-white hover:opacity-90 transition-opacity shadow-lg"
+          className="w-10 h-10 flex items-center justify-center rounded-xl bg-linear-to-br from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/30"
         >
-          {isExpanded ? <X size={24} /> : <Menu size={24} />}
+          {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
         </motion.button>
       </div>
 
-      {/* Sidebar */}
+      {/* Mobile Overlay */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileOpen(false)}
+              className="md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="md:hidden fixed inset-y-0 left-0 w-72 z-50 bg-[#05040f] border-r border-white/6 shadow-2xl shadow-black/60 overflow-hidden"
+            >
+              <SidebarContent />
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop Sidebar */}
       <motion.aside
         initial={false}
-        animate={shouldShowExpanded ? "expanded" : "collapsed"}
-        variants={sidebarVariants}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-        onMouseEnter={() => !isMobile && setIsHovering(true)}
-        onMouseLeave={() => !isMobile && setIsHovering(false)}
-        className="bg-[#05040f] border-r border-white/6 min-h-screen sticky top-0 flex flex-col overflow-hidden shadow-2xl shadow-black/40 z-40"
+        animate={{ width: isCollapsed ? 72 : 260 }}
+        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+        className="hidden md:flex flex-col min-h-screen sticky top-0 bg-[#05040f] border-r border-white/6 shadow-xl shadow-black/30 z-30 overflow-hidden"
       >
-        {/* Top Section with Logo and User */}
-        <div className="px-3 pt-4 pb-4 border-b border-white/6 space-y-4">
-          {/* Logo - Always visible but constrained */}
-          <Link
-            href="/"
-            className={`flex items-center gap-3 px-3 py-2 rounded-xl bg-linear-to-r from-violet-500/10 to-fuchsia-500/5 hover:from-violet-500/20 hover:to-fuchsia-500/10 transition-colors group ${
-              !shouldShowExpanded ? "justify-center" : ""
-            }`}
-          >
-            <div className="p-2 rounded-lg bg-linear-to-br from-violet-500 to-fuchsia-500 text-white group-hover:shadow-lg group-hover:shadow-violet-500/30 transition-shadow shrink-0">
-              <Home size={20} />
-            </div>
-            <motion.div
-              animate={shouldShowExpanded ? "expanded" : "collapsed"}
-              variants={textVariants}
-              transition={{ duration: 0.2 }}
-              className="whitespace-nowrap overflow-hidden"
-            >
-              <p className="text-sm font-bold bg-linear-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Upskillify</p>
-              <p className="text-xs text-white/40">Platform</p>
-            </motion.div>
-          </Link>
-
-          {/* User Profile Section */}
-          {clerkUser && userProfile && (
-            <motion.div
-              animate={shouldShowExpanded ? "expanded" : "collapsed"}
-              variants={{
-                expanded: { opacity: 1, height: "auto" },
-                collapsed: { opacity: 0, height: 0 },
-              }}
-              transition={{ duration: 0.2 }}
-              className="overflow-hidden"
-            >
-              <button className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-white/5 transition-all group relative ${
-                !shouldShowExpanded ? "justify-center" : ""
-              }`}>
-                <div className="shrink-0 relative">
-                  {clerkUser.imageUrl ? (
-                    <img
-                      src={clerkUser.imageUrl}
-                      alt={clerkUser.fullName || "User"}
-                      className="w-10 h-10 rounded-full object-cover border-2 border-violet-500/50 group-hover:border-violet-400 transition-colors"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-sm font-bold border border-violet-500/30">
-                      {clerkUser.firstName?.charAt(0)}
-                    </div>
-                  )}
-                  <div className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-green-500 border-2 border-card"></div>
-                </div>
-
-                <motion.div
-                  animate={shouldShowExpanded ? "expanded" : "collapsed"}
-                  variants={textVariants}
-                  transition={{ duration: 0.2 }}
-                  className="flex-1 min-w-0 text-left whitespace-nowrap overflow-hidden"
-                >
-                  <p className="text-sm font-semibold text-white truncate">{clerkUser.fullName}</p>
-                  <p className="text-xs text-white/40 truncate capitalize">{userProfile?.role || "User"}</p>
-                </motion.div>
-
-                <motion.div
-                  animate={shouldShowExpanded ? "expanded" : "collapsed"}
-                  variants={textVariants}
-                  transition={{ duration: 0.2 }}
-                  className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-                >
-                  <MoreHorizontal size={16} className="text-muted-foreground" />
-                </motion.div>
-              </button>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Navigation Items */}
-        <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-6">
-          <AnimatePresence mode="wait">
-            {categoryOrder.map((category) => {
-              const items = groupedItems[category]
-              if (!items || items.length === 0) return null
-
-              return (
-                <motion.div
-                  key={category}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="space-y-2"
-                >
-                  {/* Category Label */}
-                  <AnimatePresence>
-                    {shouldShowExpanded && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <p className="text-xs font-semibold text-white/25 uppercase tracking-wider px-3">
-                          {categoryLabels[category]}
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Nav Items */}
-                  {items.map((item, idx) => {
-                    const isActive = pathname === item.href
-                    return (
-                      <motion.div
-                        key={item.href}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
-                        onMouseEnter={() => setHoveredItem(item.href)}
-                        onMouseLeave={() => setHoveredItem(null)}
-                      >
-                        <Link
-                          href={item.href}
-                          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative whitespace-nowrap ${
-                            !shouldShowExpanded ? "justify-center" : ""
-                          } ${
-                            isActive
-                              ? "bg-violet-500/20 text-violet-300 border border-violet-500/30 shadow-lg shadow-violet-500/10"
-                              : "text-white/60 hover:bg-white/5 hover:text-white"
-                          }`}
-                          title={!shouldShowExpanded ? item.label : undefined}
-                        >
-                          <div className={`shrink-0 transition-colors ${isActive ? "" : "group-hover:text-primary"}`}>
-                            {item.icon}
-                          </div>
-                          <motion.span
-                            animate={shouldShowExpanded ? "expanded" : "collapsed"}
-                            variants={textVariants}
-                            transition={{ duration: 0.2 }}
-                            className="text-sm font-medium overflow-hidden"
-                          >
-                            {item.label}
-                          </motion.span>
-
-                          {shouldShowExpanded && isActive && (
-                            <motion.div
-                              layoutId="activeIndicator"
-                              className="absolute right-2 top-1/2 transform -translate-y-1/2 shrink-0"
-                            >
-                              <ChevronRight size={16} className="text-violet-300" />
-                            </motion.div>
-                          )}
-                        </Link>
-                      </motion.div>
-                    )
-                  })}
-                </motion.div>
-              )
-            })}
-          </AnimatePresence>
-        </nav>
-
-        {/* Bottom Section */}
-        <div className="border-t border-white/6 p-3 space-y-2">
-          {/* Logout Button */}
-          <motion.button
-            onClick={handleLogout}
-            animate={shouldShowExpanded ? "expanded" : "collapsed"}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
-              shouldShowExpanded
-                ? "text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                : "text-red-400 justify-center hover:bg-red-500/10"
-            }`}
-            title={!shouldShowExpanded ? "Logout" : undefined}
-          >
-            <LogOut size={20} className="group-hover:scale-110 transition-transform shrink-0" />
-            <motion.span
-              animate={shouldShowExpanded ? "expanded" : "collapsed"}
-              variants={textVariants}
-              transition={{ duration: 0.2 }}
-              className="text-sm font-medium whitespace-nowrap overflow-hidden"
-            >
-              Logout
-            </motion.span>
-          </motion.button>
-
-          {/* Collapse/Expand Toggle for Desktop */}
-          {!isMobile && (
-            <motion.button
-              onClick={handleToggleExpand}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/30 hover:bg-white/5 hover:text-white/60 transition-all duration-200 text-sm justify-center"
-              title={isManuallyExpanded ? "Collapse sidebar" : "Expand sidebar"}
-            >
-              {isManuallyExpanded ? <X size={20} /> : <Menu size={20} />}
-            </motion.button>
-          )}
-        </div>
+        <SidebarContent />
       </motion.aside>
     </>
   )
 }
+
