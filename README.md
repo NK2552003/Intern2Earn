@@ -283,19 +283,3 @@ pnpm install
 # Run on a different port
 pnpm dev -- -p 3001
 ```
-
-
-<!-- 
-# ─── Clerk Authentication ─────────────────────────────────────────────────────
-# Get these from https://dashboard.clerk.com → Your App → API Keys
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_ZHJpdmVuLXN0YXJsaW5nLTcuY2xlcmsuYWNjb3VudHMuZGV2JA
-CLERK_SECRET_KEY=sk_test_EOsTrhPgKt3Yr6wFe52rGeMu5C0FRD0dYE2qkiH3nw
-# Clerk webhook secret — generated in Clerk Dashboard → Webhooks
-CLERK_WEBHOOK_SECRET=whsec_ML75+rInDFGwNKCs65xd6pN2PjI455nf
-
-# ─── Supabase ──────────────────────────────────────────────────────────────────
-# Get these from https://supabase.com/dashboard → Your Project → Project Settings → API
-NEXT_PUBLIC_SUPABASE_URL=https://dgryvxknpntlubvdfdav.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRncnl2eGtucG50bHVidmRmZGF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3OTQ0MTUsImV4cCI6MjA4ODM3MDQxNX0.PwxD2Y0hyc2t38AHUtu9Yr873sME1scqPhITdVZ4ADQ
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRncnl2eGtucG50bHVidmRmZGF2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mjc5NDQxNSwiZXhwIjoyMDg4MzcwNDE1fQ.6rzStxeP-t80bmojBq7AMMVfjkIM67fuHyUVtXzsZ3U
- -->
